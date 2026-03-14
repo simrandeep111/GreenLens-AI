@@ -1,0 +1,10 @@
+{
+  "metadata": {
+    "doc_type": "compliance",
+    "framework": "GHG Protocol Corporate Standard",
+    "industry": "general",
+    "province": "Canada",
+    "topic": "emissions reporting"
+  },
+  "content": "The GHG Protocol Corporate Accounting and Reporting Standard provides requirements and guidance for companies preparing a corporate-level GHG emissions inventory. It covers the accounting and reporting of seven greenhouse gases covered by the Kyoto Protocol. Companies must report Scope 1 (direct emissions from owned or controlled sources), Scope 2 (indirect emissions from purchased electricity, steam, heating, and cooling), and may optionally report Scope 3 (all other indirect emissions in the value chain). The operational control approach is recommended for Canadian SMBs. Emission factors should be sourced from Natural Resources Canada (NRCan) for electricity grid factors and Environment and Climate Change Canada (ECCC) for combustion factors. Reporting boundaries must be clearly defined and consistently applied year over year."
+}

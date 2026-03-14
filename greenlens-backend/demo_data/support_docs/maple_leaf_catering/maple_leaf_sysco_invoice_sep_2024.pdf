@@ -1,0 +1,103 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 1 /Kids [3 0 R] >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 5207 >>
+stream
+1.00 w 0.000 0.380 0.620 rg 36.00 724.00 540.00 42.00 re f
+BT /F2 20 Tf 1.000 1.000 1.000 rg 1 0 0 1 52.00 741.00 Tm (Sysco Toronto) Tj ET
+BT /F1 9 Tf 0.910 0.960 1.000 rg 1 0 0 1 52.00 728.00 Tm (Foodservice Distribution) Tj ET
+BT /F2 16 Tf 1.000 1.000 1.000 rg 1 0 0 1 392.00 741.00 Tm (Supplier Invoice) Tj ET
+1.00 w 1.000 1.000 1.000 rg 0.830 0.850 0.880 RG 36.00 574.00 250.00 108.00 re B
+BT /F2 8 Tf 0.420 0.470 0.530 rg 1 0 0 1 50.00 664.00 Tm (BILL TO) Tj ET
+BT /F2 13 Tf 0.160 0.190 0.230 rg 1 0 0 1 50.00 644.00 Tm (Maple Leaf Catering Co.) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 50.00 628.00 Tm (Accounts Payable) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 50.00 615.00 Tm (145 King St W) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 50.00 602.00 Tm (Toronto, ON M5H 1J8) Tj ET
+1.00 w 1.000 1.000 1.000 rg 0.830 0.850 0.880 RG 310.00 574.00 266.00 108.00 re B
+BT /F2 8 Tf 0.420 0.470 0.530 rg 1 0 0 1 324.00 664.00 Tm (REMIT TO) Tj ET
+BT /F2 13 Tf 0.160 0.190 0.230 rg 1 0 0 1 324.00 644.00 Tm (Sysco Toronto) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 324.00 628.00 Tm (Sysco Toronto) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 324.00 615.00 Tm (100 Admiral Blvd) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 324.00 602.00 Tm (Mississauga, ON L5T 2N1) Tj ET
+1.00 w 1.000 1.000 1.000 rg 0.830 0.850 0.880 RG 36.00 500.00 540.00 54.00 re B
+BT /F2 8 Tf 0.420 0.470 0.530 rg 1 0 0 1 50.00 536.00 Tm (INVOICE SUMMARY) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 50.00 516.00 Tm (Invoice #: SY-240905-1184) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 230.00 516.00 Tm (Issue Date: 2024-09-05) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 396.00 516.00 Tm (Due Date: 2024-09-20) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 50.00 498.00 Tm (Terms: Net 15) Tj ET
+1.00 w 1.000 1.000 1.000 rg 0.830 0.850 0.880 RG 36.00 252.00 540.00 224.00 re B
+1.00 w 0.940 0.960 0.980 rg 36.00 450.00 540.00 26.00 re f
+BT /F2 9 Tf 0.380 0.440 0.510 rg 1 0 0 1 52.00 458.00 Tm (Description) Tj ET
+BT /F2 9 Tf 0.380 0.440 0.510 rg 1 0 0 1 388.00 458.00 Tm (Qty) Tj ET
+BT /F2 9 Tf 0.380 0.440 0.510 rg 1 0 0 1 444.00 458.00 Tm (Rate) Tj ET
+BT /F2 9 Tf 0.380 0.440 0.510 rg 1 0 0 1 510.00 458.00 Tm (Amount) Tj ET
+1.00 w 0.900 0.920 0.940 RG 48.00 420.00 m 564.00 420.00 l S
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 52.00 428.00 Tm (Seasonal produce and greens for event prep) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 392.00 428.00 Tm (1) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 438.00 428.00 Tm ($812.45) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 502.00 428.00 Tm ($812.45) Tj ET
+1.00 w 0.900 0.920 0.940 RG 48.00 386.00 m 564.00 386.00 l S
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 52.00 394.00 Tm (Protein order - poultry and braised meats) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 392.00 394.00 Tm (1) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 438.00 394.00 Tm ($674.20) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 502.00 394.00 Tm ($674.20) Tj ET
+1.00 w 0.900 0.920 0.940 RG 48.00 352.00 m 564.00 352.00 l S
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 52.00 360.00 Tm (Prepared desserts and dairy restock) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 392.00 360.00 Tm (1) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 438.00 360.00 Tm ($438.88) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 502.00 360.00 Tm ($438.88) Tj ET
+1.00 w 0.900 0.920 0.940 RG 48.00 318.00 m 564.00 318.00 l S
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 52.00 326.00 Tm (Dry goods, pantry staples, and ice) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 392.00 326.00 Tm (1) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 438.00 326.00 Tm ($271.95) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 502.00 326.00 Tm ($271.95) Tj ET
+1.00 w 0.980 0.990 1.000 rg 0.830 0.850 0.880 RG 356.00 184.00 220.00 56.00 re B
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 372.00 222.00 Tm (Subtotal) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 494.00 222.00 Tm ($2,197.48) Tj ET
+BT /F1 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 372.00 206.00 Tm (HST) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 494.00 206.00 Tm ($285.67) Tj ET
+1.20 w 0.000 0.380 0.620 RG 372.00 198.00 m 560.00 198.00 l S
+BT /F2 11 Tf 0.160 0.190 0.230 rg 1 0 0 1 372.00 186.00 Tm (Amount Due) Tj ET
+BT /F2 15 Tf 0.000 0.380 0.620 rg 1 0 0 1 484.00 186.00 Tm ($2,483.15) Tj ET
+1.00 w 1.000 1.000 1.000 rg 0.830 0.850 0.880 RG 36.00 98.00 296.00 128.00 re B
+BT /F2 8 Tf 0.420 0.470 0.530 rg 1 0 0 1 50.00 208.00 Tm (VENDOR NOTES) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 188.00 Tm (Representative weekly supply invoice prepared) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 174.00 Tm (for demo uploads. Line items are intentionally) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 160.00 Tm (realistic and align with the company profile,) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 146.00 Tm (but they do not attempt to match every monthly) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 132.00 Tm (food supply expense in the CSV.) Tj ET
+BT /F1 9 Tf 0.430 0.480 0.540 rg 1 0 0 1 50.00 112.00 Tm (Reference: Please include invoice number with remittance.) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+xref
+0 8
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000261 00000 n 
+0000005520 00000 n 
+0000005590 00000 n 
+0000005665 00000 n 
+trailer
+<< /Size 8 /Root 1 0 R >>
+startxref
+5733
+%%EOF

@@ -1,0 +1,53 @@
+date,category,description,amount,vendor
+2024-01-10,Utilities,Monthly electricity - office,$680.00,Toronto Hydro
+2024-02-10,Utilities,Monthly electricity,$695.00,Toronto Hydro
+2024-03-10,Utilities,Monthly electricity,$710.00,Toronto Hydro
+2024-04-10,Utilities,Monthly electricity,$650.00,Toronto Hydro
+2024-05-10,Utilities,Monthly electricity,$720.00,Toronto Hydro
+2024-06-10,Utilities,Monthly electricity - summer AC,$845.00,Toronto Hydro
+2024-07-10,Utilities,Monthly electricity - peak summer,$890.00,Toronto Hydro
+2024-08-10,Utilities,Monthly electricity,$830.00,Toronto Hydro
+2024-09-10,Utilities,Monthly electricity,$740.00,Toronto Hydro
+2024-10-10,Utilities,Monthly electricity,$700.00,Toronto Hydro
+2024-11-10,Utilities,Monthly electricity,$715.00,Toronto Hydro
+2024-12-10,Utilities,Monthly electricity,$730.00,Toronto Hydro
+2024-01-15,Utilities,Monthly natural gas office heating,$180.00,Enbridge Gas
+2024-02-15,Utilities,Natural gas heating,$195.00,Enbridge Gas
+2024-03-15,Utilities,Natural gas,$165.00,Enbridge Gas
+2024-04-15,Utilities,Gas heating,$85.00,Enbridge Gas
+2024-11-15,Utilities,Natural gas heating,$140.00,Enbridge Gas
+2024-12-15,Utilities,Natural gas heating,$175.00,Enbridge Gas
+2024-03-18,Travel,Client meeting travel - Vancouver,$1680.00,Air Canada
+2024-06-20,Travel,Tech conference - San Francisco,$2450.00,Air Canada
+2024-09-15,Travel,Client meeting - Calgary,$980.00,WestJet
+2024-11-08,Travel,AWS re:Invent conference,$3200.00,Air Canada
+2024-01-05,Services,Cloud hosting - AWS,$4200.00,Amazon Web Services
+2024-02-05,Services,Cloud hosting,$4200.00,Amazon Web Services
+2024-03-05,Services,Cloud hosting,$4350.00,Amazon Web Services
+2024-04-05,Services,Cloud hosting,$4100.00,Amazon Web Services
+2024-05-05,Services,Cloud hosting,$4500.00,Amazon Web Services
+2024-06-05,Services,Cloud hosting,$4400.00,Amazon Web Services
+2024-07-05,Services,Cloud hosting,$4600.00,Amazon Web Services
+2024-08-05,Services,Cloud hosting,$4550.00,Amazon Web Services
+2024-09-05,Services,Cloud hosting,$4300.00,Amazon Web Services
+2024-10-05,Services,Cloud hosting,$4450.00,Amazon Web Services
+2024-11-05,Services,Cloud hosting,$4500.00,Amazon Web Services
+2024-12-05,Services,Cloud hosting,$4700.00,Amazon Web Services
+2024-02-20,Office,Office supplies,$185.00,Staples
+2024-05-18,Office,Office supplies and equipment,$320.00,Staples
+2024-08-22,Office,Office supplies,$210.00,Grand & Toy
+2024-11-15,Office,Office supplies,$175.00,Staples
+2024-01-30,Shipping,Courier services,$280.00,Purolator
+2024-04-28,Shipping,Package delivery,$310.00,FedEx
+2024-07-30,Shipping,Courier,$265.00,Purolator
+2024-10-28,Shipping,Shipping services,$290.00,FedEx
+2024-04-01,Professional,Quarterly legal and accounting,$2800.00,BDO Canada
+2024-07-01,Professional,Quarterly accounting,$2800.00,BDO Canada
+2024-10-01,Professional,Quarterly accounting,$2800.00,BDO Canada
+2024-12-15,Professional,Year-end audit and tax,$4200.00,BDO Canada
+2024-03-10,Rideshare,Team rideshare account,$420.00,Uber for Business
+2024-06-12,Rideshare,Client meeting travel,$380.00,Uber for Business
+2024-09-08,Rideshare,Team transportation,$350.00,Uber for Business
+2024-12-04,Rideshare,Holiday event transportation,$410.00,Uber for Business
+2024-06-01,Waste,Quarterly e-waste recycling,$450.00,Waste Connections
+2024-12-01,Waste,Quarterly e-waste and office recycling,$480.00,Waste Connections

@@ -1,0 +1,85 @@
+date,category,description,amount,vendor
+2024-01-15,Utilities,Monthly natural gas heating - kitchen and facility,$842.17,Enbridge Gas
+2024-02-15,Utilities,Monthly natural gas heating,$798.50,Enbridge Gas
+2024-03-15,Utilities,Monthly natural gas heating,$685.30,Enbridge Gas
+2024-04-15,Utilities,Monthly natural gas heating,$420.00,Enbridge Gas
+2024-05-15,Utilities,Monthly natural gas heating,$310.25,Enbridge Gas
+2024-06-15,Utilities,Monthly natural gas heating,$180.00,Enbridge Gas
+2024-07-15,Utilities,Monthly natural gas heating,$125.00,Enbridge Gas
+2024-08-15,Utilities,Monthly natural gas heating,$130.00,Enbridge Gas
+2024-09-15,Utilities,Monthly natural gas heating,$245.00,Enbridge Gas
+2024-10-15,Utilities,Monthly natural gas heating,$520.00,Enbridge Gas
+2024-11-15,Utilities,Monthly natural gas heating,$710.00,Enbridge Gas
+2024-12-15,Utilities,Monthly natural gas heating,$830.00,Enbridge Gas
+2024-01-20,Fuel,Fleet diesel fuel - delivery van 1,$385.90,Petro-Canada
+2024-02-20,Fuel,Fleet diesel fuel - delivery vans,$412.30,Shell Canada
+2024-03-20,Fuel,Fleet fuel - delivery vehicles,$398.15,Petro-Canada
+2024-04-20,Fuel,Fleet diesel - catering delivery,$445.00,Shell Canada
+2024-05-20,Fuel,Fleet fuel - all vehicles,$510.25,Petro-Canada
+2024-06-20,Fuel,Fleet fuel - summer events delivery,$620.00,Shell Canada
+2024-07-20,Fuel,Fleet fuel - catering delivery,$580.40,Petro-Canada
+2024-08-20,Fuel,Fleet fuel,$495.00,Shell Canada
+2024-09-20,Fuel,Fleet diesel,$430.15,Petro-Canada
+2024-10-20,Fuel,Fleet fuel - delivery,$388.00,Shell Canada
+2024-11-20,Fuel,Fleet diesel fuel,$365.25,Petro-Canada
+2024-12-20,Fuel,Fleet fuel - holiday events,$425.50,Shell Canada
+2024-01-10,Utilities,Monthly electricity - facility and kitchen,$1820.00,Toronto Hydro
+2024-02-10,Utilities,Monthly electricity,$1745.00,Toronto Hydro
+2024-03-10,Utilities,Monthly electricity,$1680.50,Toronto Hydro
+2024-04-10,Utilities,Monthly electricity,$1590.00,Toronto Hydro
+2024-05-10,Utilities,Monthly electricity,$1710.00,Toronto Hydro
+2024-06-10,Utilities,Monthly electricity - summer AC,$1920.00,Toronto Hydro
+2024-07-10,Utilities,Monthly electricity - peak summer,$2100.00,Toronto Hydro
+2024-08-10,Utilities,Monthly electricity,$1950.00,Toronto Hydro
+2024-09-10,Utilities,Monthly electricity,$1820.00,Toronto Hydro
+2024-10-10,Utilities,Monthly electricity,$1690.00,Toronto Hydro
+2024-11-10,Utilities,Monthly electricity,$1780.00,Toronto Hydro
+2024-12-10,Utilities,Monthly electricity,$1850.00,Toronto Hydro
+2024-01-05,Food Supply,Monthly produce and protein order,$8420.00,Sysco Food
+2024-02-05,Food Supply,Monthly produce and ingredients,$7850.00,Sysco Food
+2024-03-05,Food Supply,Monthly food supplies,$8100.00,Sysco Food
+2024-04-05,Food Supply,Monthly produce order,$7600.00,Sysco Food
+2024-05-05,Food Supply,Monthly ingredients and produce,$8200.00,Gordon Food Service
+2024-06-05,Food Supply,Monthly food supplies - summer events,$9500.00,Sysco Food
+2024-07-05,Food Supply,Monthly produce and protein,$9200.00,Gordon Food Service
+2024-08-05,Food Supply,Monthly food supplies,$8800.00,Sysco Food
+2024-09-05,Food Supply,Monthly produce order,$7900.00,Gordon Food Service
+2024-10-05,Food Supply,Monthly food supplies,$8100.00,Sysco Food
+2024-11-05,Food Supply,Monthly ingredients,$8400.00,Gordon Food Service
+2024-12-05,Food Supply,Monthly food - holiday catering,$10200.00,Sysco Food
+2024-01-25,Waste,Monthly waste disposal and recycling,$1240.00,Waste Management
+2024-02-25,Waste,Monthly waste service,$1180.00,Waste Management
+2024-03-25,Waste,Monthly waste and recycling,$1200.00,Waste Management
+2024-04-25,Waste,Waste disposal,$1150.00,Waste Management
+2024-05-25,Waste,Monthly waste service,$1280.00,Waste Management
+2024-06-25,Waste,Waste disposal and composting,$1350.00,Waste Connections
+2024-07-25,Waste,Monthly waste service,$1320.00,Waste Connections
+2024-08-25,Waste,Waste disposal,$1290.00,Waste Management
+2024-09-25,Waste,Monthly waste and recycling,$1200.00,Waste Connections
+2024-10-25,Waste,Waste disposal,$1180.00,Waste Management
+2024-11-25,Waste,Monthly waste service,$1250.00,Waste Connections
+2024-12-25,Waste,Holiday waste disposal,$1380.00,Waste Management
+2024-02-12,Packaging,Food packaging and containers,$2100.00,Uline Packaging
+2024-04-18,Packaging,Eco-friendly takeout containers,$2450.00,Novapack
+2024-06-22,Packaging,Summer event packaging,$2800.00,Uline Packaging
+2024-08-15,Packaging,Food containers and wraps,$2200.00,Novapack
+2024-10-20,Packaging,Fall catering packaging,$2350.00,Uline Packaging
+2024-12-05,Packaging,Holiday packaging supplies,$2600.00,Novapack
+2024-03-10,Travel,Business travel - Toronto food expo,$1420.00,Air Canada
+2024-06-15,Travel,Conference travel - Vancouver sustainability summit,$2180.00,Air Canada
+2024-09-22,Travel,Client meeting travel - Ottawa,$890.00,WestJet
+2024-11-05,Travel,Industry conference - Montreal,$1350.00,Air Canada
+2024-01-30,Shipping,Monthly courier and delivery supplies,$680.00,Purolator
+2024-03-30,Shipping,Courier services,$720.00,FedEx
+2024-05-30,Shipping,Shipping and logistics,$650.00,Canada Post
+2024-07-30,Shipping,Courier services,$710.00,Purolator
+2024-09-30,Shipping,Shipping,$680.00,FedEx
+2024-11-30,Shipping,Courier and delivery,$750.00,Purolator
+2024-02-28,Office,Office supplies and paper,$340.00,Staples
+2024-05-15,Office,Printer supplies and stationery,$280.00,Grand & Toy
+2024-08-20,Office,Office supplies,$310.00,Staples
+2024-11-10,Office,Office and paper supplies,$295.00,Grand & Toy
+2024-04-01,Professional,Quarterly accounting services,$3200.00,McCarthy & Associates
+2024-07-01,Professional,Quarterly bookkeeping,$3200.00,McCarthy & Associates
+2024-10-01,Professional,Quarterly accounting,$3200.00,McCarthy & Associates
+2024-12-15,Professional,Year-end accounting and tax prep,$4800.00,McCarthy & Associates

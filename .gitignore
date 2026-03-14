@@ -1,0 +1,22 @@
+.DS_Store
+**/.DS_Store
+
+**/node_modules/
+**/.next/
+**/coverage/
+**/*.tsbuildinfo
+greenlens-ai/next-env.d.ts
+
+**/__pycache__/
+**/*.py[cod]
+**/venv/
+
+**/.env
+**/.env.*
+
+greenlens-backend/data/uploads/
+greenlens-backend/data/processed/
+
+front end design - greelens ai.rtf
+greenlens-ai-.html
+project.txt
