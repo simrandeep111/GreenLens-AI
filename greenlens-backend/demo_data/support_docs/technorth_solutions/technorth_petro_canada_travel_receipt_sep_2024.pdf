@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 2727 >>
+<< /Length 3062 >>
 stream
 1.00 w 1.000 1.000 1.000 rg 0.800 0.820 0.860 RG 132.00 72.00 348.00 648.00 re B
 1.00 w 0.730 0.090 0.140 rg 132.00 664.00 348.00 56.00 re f
@@ -34,15 +34,19 @@ BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 382.00 470.00 Tm ($60.79) Tj ET
 BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 442.00 Tm (Station service fee and) Tj ET
 BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 430.00 Tm (taxes) Tj ET
 BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 382.00 442.00 Tm ($12.46) Tj ET
+1.00 w 0.910 0.920 0.940 RG 166.00 406.00 m 444.00 406.00 l S
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 414.00 Tm (Handwritten surcharge) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 402.00 Tm (adjustment) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 382.00 414.00 Tm ($54.90) Tj ET
 1.20 w 0.730 0.090 0.140 RG 170.00 370.00 m 440.00 370.00 l S
 BT /F2 11 Tf 0.160 0.190 0.230 rg 1 0 0 1 170.00 350.00 Tm (Total Paid) Tj ET
 BT /F2 16 Tf 0.730 0.090 0.140 rg 1 0 0 1 370.00 350.00 Tm ($73.25) Tj ET
 BT /F2 9 Tf 0.420 0.470 0.530 rg 1 0 0 1 154.00 300.00 Tm (Receipt Notes) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 282.00 Tm (- Example client-trip travel receipt tied to a) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 270.00 Tm (single field visit.) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 258.00 Tm (- Amount is intentionally realistic but is not) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 246.00 Tm (meant to reconcile the full annual travel) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 234.00 Tm (category.) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 282.00 Tm (- Intentional fraud-signal sample: the line) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 270.00 Tm (items do not reconcile to the stated total.) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 258.00 Tm (- The vendor also does not map cleanly to) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 246.00 Tm (TechNorth's uploaded travel ledger, so it should) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 234.00 Tm (trigger follow-up.) Tj ET
 BT /F1 10 Tf 0.430 0.480 0.540 rg 1 0 0 1 154.00 108.00 Tm (Thank you for your business.) Tj ET
 endstream
 endobj
@@ -62,11 +66,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000261 00000 n 
-0000003040 00000 n 
-0000003110 00000 n 
-0000003185 00000 n 
+0000003375 00000 n 
+0000003445 00000 n 
+0000003520 00000 n 
 trailer
 << /Size 8 /Root 1 0 R >>
 startxref
-3253
+3588
 %%EOF

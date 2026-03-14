@@ -6,6 +6,7 @@ import uuid
 import shutil
 from pathlib import Path
 from typing import List
+import re
 
 from fastapi import APIRouter, UploadFile, File, HTTPException
 
@@ -13,6 +14,13 @@ from core.config import UPLOADS_DIR
 from models.response_models import UploadResponse
 
 router = APIRouter()
+
+
+def _safe_file_name(name: str, fallback: str) -> str:
+    stem = Path(name).stem.strip() or fallback
+    suffix = Path(name).suffix.lower() or ".pdf"
+    cleaned = re.sub(r"[^a-zA-Z0-9._-]+", "_", stem).strip("._")
+    return f"{cleaned or fallback}{suffix}"
 
 
 @router.post("/upload", response_model=UploadResponse)
@@ -36,7 +44,8 @@ async def upload_files(
     # Save optional PDFs
     for i, pdf in enumerate(pdf_files):
         if pdf.filename:
-            pdf_path = upload_dir / f"support_{i+1}.pdf"
+            safe_name = _safe_file_name(pdf.filename, f"support_{i+1}")
+            pdf_path = upload_dir / safe_name
             with open(pdf_path, "wb") as f:
                 shutil.copyfileobj(pdf.file, f)
 

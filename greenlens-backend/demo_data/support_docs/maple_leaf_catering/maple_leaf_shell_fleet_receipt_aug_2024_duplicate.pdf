@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 2781 >>
+<< /Length 2902 >>
 stream
 1.00 w 1.000 1.000 1.000 rg 0.800 0.820 0.860 RG 132.00 72.00 348.00 648.00 re B
 1.00 w 0.790 0.100 0.120 rg 132.00 664.00 348.00 56.00 re f
@@ -31,18 +31,19 @@ BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 470.00 Tm (Ultra low sulphur di
 BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 458.00 Tm (fleet pump batch) Tj ET
 BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 382.00 470.00 Tm ($438.20) Tj ET
 1.00 w 0.910 0.920 0.940 RG 166.00 434.00 m 444.00 434.00 l S
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 442.00 Tm (DEF top-up, car wash, and) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 430.00 Tm (service fees) Tj ET
-BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 382.00 442.00 Tm ($56.80) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 442.00 Tm (Handwritten DEF adjustment) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 170.00 430.00 Tm (and wash add-on) Tj ET
+BT /F3 10 Tf 0.160 0.190 0.230 rg 1 0 0 1 382.00 442.00 Tm ($94.35) Tj ET
 1.20 w 0.790 0.100 0.120 RG 170.00 370.00 m 440.00 370.00 l S
 BT /F2 11 Tf 0.160 0.190 0.230 rg 1 0 0 1 170.00 350.00 Tm (Total Paid) Tj ET
 BT /F2 16 Tf 0.790 0.100 0.120 rg 1 0 0 1 370.00 350.00 Tm ($495.00) Tj ET
 BT /F2 9 Tf 0.420 0.470 0.530 rg 1 0 0 1 154.00 300.00 Tm (Receipt Notes) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 282.00 Tm (- Representative fleet fuel event aligned to) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 270.00 Tm (Maple Leaf Catering's August Shell ledger entry.) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 258.00 Tm (- Useful for demonstrating a clean) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 246.00 Tm (vendor/date/amount match in the document) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 234.00 Tm (assurance flow.) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 282.00 Tm (- Intentional duplicate fraud-signal sample) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 270.00 Tm (using the same merchant reference as the clean) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 258.00 Tm (Shell receipt.) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 258.00 Tm (- The line items also fail to reconcile to the) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 246.00 Tm (stated total, so GreenLens should surface both) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 154.00 234.00 Tm (duplicate and math mismatch alerts.) Tj ET
 BT /F1 10 Tf 0.430 0.480 0.540 rg 1 0 0 1 154.00 108.00 Tm (Thank you for your business.) Tj ET
 endstream
 endobj
@@ -62,11 +63,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000261 00000 n 
-0000003094 00000 n 
-0000003164 00000 n 
-0000003239 00000 n 
+0000003215 00000 n 
+0000003285 00000 n 
+0000003360 00000 n 
 trailer
 << /Size 8 /Root 1 0 R >>
 startxref
-3307
+3428
 %%EOF

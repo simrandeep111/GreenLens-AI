@@ -40,7 +40,7 @@ def complete_job(job_id: str, result: dict) -> None:
     with _lock:
         if job_id in _jobs:
             _jobs[job_id]["status"] = "complete"
-            _jobs[job_id]["current_step"] = 6
+            _jobs[job_id]["current_step"] = 7
             _jobs[job_id]["step_label"] = "Complete"
             _jobs[job_id]["progress"] = 100
             _jobs[job_id]["result"] = result

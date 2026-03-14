@@ -12,6 +12,7 @@ REQUIRED_REPORT_KEYS = [
     "executiveSummary",
     "emissionsNarrative",
     "complianceNarrative",
+    "fraudNarrative",
     "fundingNarrative",
     "actionsNarrative",
 ]
@@ -22,6 +23,7 @@ def _build_report_prompt(
     emissions: dict,
     benchmark: dict,
     compliance_context: str,
+    fraud_analysis: dict,
     grants_context: str,
     recommendations: list[dict],
 ) -> str:
@@ -33,14 +35,20 @@ def _build_report_prompt(
         f"  - {b['category']}: {b['tCO2e']} tCO2e ({b['scope']}, {b['percentOfTotal']}%)"
         for b in emissions.get("breakdown", [])
     )
+    fraud_flags = fraud_analysis.get("flags", [])
+    fraud_flags_text = "\n".join(
+        f"- [{flag['severity'].upper()}] {flag['title']}: {flag['detail']}"
+        for flag in fraud_flags[:5]
+    ) or "- No material fraud flags detected."
 
     return f"""You are an expert ESG analyst at a Canadian sustainability consulting firm.
 Write a professional ESG report based on the following verified data. 
 
-IMPORTANT: Return ONLY a valid JSON object with exactly these 5 keys:
+IMPORTANT: Return ONLY a valid JSON object with exactly these 6 keys:
 - executiveSummary
 - emissionsNarrative
 - complianceNarrative
+- fraudNarrative
 - fundingNarrative
 - actionsNarrative
 
@@ -73,6 +81,21 @@ Breakdown:
 
 --- REGULATORY CONTEXT ---
 {compliance_context}
+
+--- SUPPORTING DOCUMENT ASSURANCE / FRAUD SIGNALS ---
+Overall risk: {fraud_analysis['overallRisk']}
+Risk score: {fraud_analysis['riskScore']}/100
+Summary: {fraud_analysis['summary']}
+Supporting docs reviewed: {fraud_analysis['supportingDocsReviewed']}
+Matched documents: {fraud_analysis['matchedDocuments']}
+Partial matches: {fraud_analysis['partialMatches']}
+Unmatched documents: {fraud_analysis['unmatchedDocuments']}
+Duplicate documents: {fraud_analysis['duplicateDocuments']}
+Verified spend amount: ${fraud_analysis['verifiedSpendAmount']:.2f}
+Verified spend coverage across reviewed vendors: {fraud_analysis['verifiedSpendPct']}%
+
+Top document assurance findings:
+{fraud_flags_text}
 
 --- AVAILABLE GRANTS ---
 {grants_context}
@@ -132,6 +155,12 @@ def _build_fallback_report(
             f"{name} meets GHG Protocol reporting requirements. OSFI Guideline B-15 compliance "
             f"has gaps that are addressable within one fiscal year. Full CBCA annual sustainability "
             f"disclosure has not yet been published."
+        ),
+        "fraudNarrative": (
+            f"Supporting-document assurance was completed using the uploaded utility bills, receipts, and invoices. "
+            f"GreenLens reviewed document-to-ledger matches, duplicate references, and internal math consistency "
+            f"to surface potential fraud or weak evidence trails. Any flagged mismatches should be reviewed before "
+            f"relying on the submitted records for external reporting or reimbursement workflows."
         ),
         "fundingNarrative": (
             f"Based on {name}'s province, industry, and size, GreenLens has identified eligible "
@@ -259,6 +288,7 @@ def generate_report(
     emissions: dict,
     benchmark: dict,
     compliance_context: str,
+    fraud_analysis: dict,
     grants_context: str,
     recommendations: list[dict],
 ) -> dict:
@@ -268,7 +298,7 @@ def generate_report(
     """
     prompt = _build_report_prompt(
         company, score, emissions, benchmark,
-        compliance_context, grants_context, recommendations,
+        compliance_context, fraud_analysis, grants_context, recommendations,
     )
 
     raw = call_moorcheh_answer(prompt, temperature=0.3, timeout=180.0)

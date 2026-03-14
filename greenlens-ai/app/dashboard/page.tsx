@@ -7,6 +7,7 @@ import ESGScoreCard from '@/components/dashboard/ESGScoreCard';
 import EmissionsChart from '@/components/dashboard/EmissionsChart';
 import ComplianceCard from '@/components/dashboard/ComplianceCard';
 import RecommendationList from '@/components/dashboard/RecommendationList';
+import DocumentAssuranceCard from '@/components/dashboard/DocumentAssuranceCard';
 import GrantsCard from '@/components/dashboard/GrantsCard';
 import BenchmarkChart from '@/components/dashboard/BenchmarkChart';
 import AnalysisInProgressState from '@/components/processing/AnalysisInProgressState';
@@ -26,7 +27,7 @@ function buildCompleteStatus(jobId: string): JobStatus {
   return {
     jobId,
     status: 'complete',
-    currentStep: 6,
+    currentStep: 7,
     stepLabel: 'Complete',
     progress: 100,
     error: null,
@@ -314,6 +315,7 @@ export default function DashboardPage() {
           </div>
           <div className="dash-right">
             <RecommendationList recommendations={report.recommendations} />
+            <DocumentAssuranceCard fraudAnalysis={report.fraudAnalysis} />
             <GrantsCard grants={report.grants} />
           </div>
         </div>

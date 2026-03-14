@@ -13,6 +13,29 @@ from core.job_store import get_job
 def _normalize_report_result(report: dict) -> dict:
     normalized = dict(report)
     normalized.setdefault("reportSource", "unknown")
+    normalized.setdefault(
+        "fraudAnalysis",
+        {
+            "overallRisk": "not_assessed",
+            "riskScore": 0,
+            "summary": "No supporting documents were reviewed for this legacy report.",
+            "supportingDocsReviewed": 0,
+            "matchedDocuments": 0,
+            "partialMatches": 0,
+            "unmatchedDocuments": 0,
+            "duplicateDocuments": 0,
+            "verifiedSpendAmount": 0.0,
+            "reviewedVendorSpendAmount": 0.0,
+            "verifiedSpendPct": 0,
+            "flags": [],
+            "documents": [],
+        },
+    )
+    if "reportSections" in normalized:
+        normalized["reportSections"].setdefault(
+            "fraudNarrative",
+            "Supporting document assurance was not available for this legacy report.",
+        )
     return normalized
 
 

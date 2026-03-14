@@ -16,7 +16,8 @@ const STEPS: Step[] = [
   { id: 3, name: 'Classifying Scope 1 / 2 / 3', desc: 'Assigning each activity to the right GHG Protocol reporting scope.' },
   { id: 4, name: 'Calculating emissions and benchmarks', desc: 'Applying Canadian emission factors and sector intensity benchmarks.' },
   { id: 5, name: 'Retrieving compliance and grant context', desc: 'Matching regulations and funding programs to your province and sector.' },
-  { id: 6, name: 'Generating ESG report', desc: 'Building the dashboard, recommendations, and narrative report payload.' },
+  { id: 6, name: 'Verifying supporting documents and fraud signals', desc: 'Reviewing uploaded bills, receipts, and invoices against the ledger for evidence gaps and anomalies.' },
+  { id: 7, name: 'Generating ESG report', desc: 'Building the dashboard, recommendations, narrative report, and document-assurance output.' },
 ];
 
 function StepIcon({ state }: { state: StepState }) {

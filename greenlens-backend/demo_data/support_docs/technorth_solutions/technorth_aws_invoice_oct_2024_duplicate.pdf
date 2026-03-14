@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 5111 >>
+<< /Length 5090 >>
 stream
 1.00 w 0.940 0.550 0.100 rg 36.00 724.00 540.00 42.00 re f
 BT /F2 20 Tf 1.000 1.000 1.000 rg 1 0 0 1 52.00 741.00 Tm (Amazon Web Services) Tj ET
@@ -69,10 +69,10 @@ BT /F2 11 Tf 0.160 0.190 0.230 rg 1 0 0 1 372.00 186.00 Tm (Amount Due) Tj ET
 BT /F2 15 Tf 0.940 0.550 0.100 rg 1 0 0 1 484.00 186.00 Tm ($4,450.00) Tj ET
 1.00 w 1.000 1.000 1.000 rg 0.830 0.850 0.880 RG 36.00 98.00 296.00 128.00 re B
 BT /F2 8 Tf 0.420 0.470 0.530 rg 1 0 0 1 50.00 208.00 Tm (VENDOR NOTES) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 188.00 Tm (This AWS invoice is matched to the October) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 174.00 Tm (cloud-hosting ledger entry so the assurance) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 160.00 Tm (workflow can show a high-confidence vendor and) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 146.00 Tm (amount reconciliation.) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 188.00 Tm (Intentional duplicate copy for fraud-signal) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 174.00 Tm (testing. Upload this alongside the main AWS) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 160.00 Tm (invoice to trigger a duplicate-reference) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 146.00 Tm (alert.) Tj ET
 BT /F1 9 Tf 0.430 0.480 0.540 rg 1 0 0 1 50.00 112.00 Tm (Reference: Please include invoice number with remittance.) Tj ET
 endstream
 endobj
@@ -92,11 +92,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000261 00000 n 
-0000005424 00000 n 
-0000005494 00000 n 
-0000005569 00000 n 
+0000005403 00000 n 
+0000005473 00000 n 
+0000005548 00000 n 
 trailer
 << /Size 8 /Root 1 0 R >>
 startxref
-5637
+5616
 %%EOF

@@ -21,6 +21,8 @@ from services.retrieval_service import (
     retrieve_compliance, retrieve_grants,
     format_compliance_context, format_grants_context,
 )
+from services.supporting_document_service import parse_supporting_documents
+from services.fraud_detection_service import analyze_supporting_documents
 from services.report_generator import generate_report
 
 
@@ -129,7 +131,8 @@ def run_pipeline(job_id: str) -> None:
         company = job["company"]
         governance_answers = job["governance_answers"]
         upload_id = job["upload_id"]
-        csv_path = UPLOADS_DIR / upload_id / "input.csv"
+        upload_dir = UPLOADS_DIR / upload_id
+        csv_path = upload_dir / "input.csv"
 
         # ── Step 1: Parse ──
         update_step(job_id, 1, "Parsing uploaded data", 10)
@@ -183,14 +186,20 @@ def run_pipeline(job_id: str) -> None:
         compliance_pass = sum(1 for c in compliance_items if c["status"] == "pass")
         compliance_pct = int((compliance_pass / len(compliance_items)) * 100) if compliance_items else 0
 
-        # ── Step 6: Generate report narrative ──
-        update_step(job_id, 6, "Generating ESG report", 85)
+        # ── Step 6: Verify supporting documents and fraud signals ──
+        update_step(job_id, 6, "Verifying supporting documents and fraud signals", 84)
+        support_documents = parse_supporting_documents(upload_dir)
+        fraud_analysis = analyze_supporting_documents(df, support_documents)
+
+        # ── Step 7: Generate report narrative ──
+        update_step(job_id, 7, "Generating ESG report", 92)
         report_sections, report_source = generate_report(
             company=company,
             score=score,
             emissions=emissions,
             benchmark=benchmark,
             compliance_context=compliance_context,
+            fraud_analysis=fraud_analysis,
             grants_context=grants_context,
             recommendations=recommendations,
         )
@@ -208,6 +217,7 @@ def run_pipeline(job_id: str) -> None:
             "emissions": emissions,
             "compliance": compliance_items,
             "complianceReadinessPct": compliance_pct,
+            "fraudAnalysis": fraud_analysis,
             "grants": grants,
             "totalGrantsAvailable": total_grants,
             "recommendations": recommendations,
@@ -217,6 +227,15 @@ def run_pipeline(job_id: str) -> None:
         # Save to disk
         out_dir = PROCESSED_DIR / job_id
         out_dir.mkdir(parents=True, exist_ok=True)
+        with open(out_dir / "document_assurance.json", "w") as f:
+            json.dump(
+                {
+                    "documents": support_documents,
+                    "fraudAnalysis": fraud_analysis,
+                },
+                f,
+                indent=2,
+            )
         with open(out_dir / "final_report.json", "w") as f:
             json.dump(result, f, indent=2)
 

@@ -21,7 +21,7 @@ function buildCompleteStatus(jobId: string): JobStatus {
   return {
     jobId,
     status: 'complete',
-    currentStep: 6,
+    currentStep: 7,
     stepLabel: 'Complete',
     progress: 100,
     error: null,
@@ -173,7 +173,7 @@ export default function ProcessingPage() {
         <h2 className="processing-title">Analysing your data</h2>
         <p className="processing-sub">
           GreenLens AI is processing your financial records, mapping emissions across all three scopes,
-          and retrieving applicable Canadian compliance requirements.
+          validating supporting documents, and retrieving applicable Canadian compliance requirements.
         </p>
 
         <ProcessingSteps status={displayStatus ?? null} />

@@ -8,6 +8,7 @@ import ReportSidebar from '@/components/report/ReportSidebar';
 import ReportCopilot from '@/components/report/ReportCopilot';
 import ReportSection from '@/components/report/ReportSection';
 import EmissionsTable from '@/components/report/EmissionsTable';
+import SupportingDocumentsSection from '@/components/report/SupportingDocumentsSection';
 import { ApiError, getAnalysisStatus, getBackendMeta, getReport } from '@/lib/api';
 import { loadSessionForBackend, updateSession } from '@/lib/session';
 import { AnalysisSession, ComplianceItem, JobStatus } from '@/lib/types';
@@ -24,7 +25,7 @@ function buildCompleteStatus(jobId: string): JobStatus {
   return {
     jobId,
     status: 'complete',
-    currentStep: 6,
+    currentStep: 7,
     stepLabel: 'Complete',
     progress: 100,
     error: null,
@@ -225,6 +226,7 @@ export default function ReportPage() {
   const executiveParagraphs = splitParagraphs(report.reportSections.executiveSummary);
   const emissionsParagraphs = splitParagraphs(report.reportSections.emissionsNarrative);
   const complianceParagraphs = splitParagraphs(report.reportSections.complianceNarrative);
+  const fraudParagraphs = splitParagraphs(report.reportSections.fraudNarrative);
   const fundingParagraphs = splitParagraphs(report.reportSections.fundingNarrative);
   const actionParagraphs = splitParagraphs(report.reportSections.actionsNarrative);
 
@@ -313,7 +315,19 @@ export default function ReportPage() {
               </div>
             </ReportSection>
 
-            <ReportSection id="funding" num="04" eyebrow="Funding Opportunities" title="Funding & Grants Opportunities">
+            <ReportSection
+              id="fraud"
+              num="04"
+              eyebrow="Supporting Documents & Fraud Signals"
+              title="Supporting Document Assurance & Fraud Signals"
+            >
+              {fraudParagraphs.map((paragraph) => (
+                <p className="report-p" key={paragraph}>{paragraph}</p>
+              ))}
+              <SupportingDocumentsSection fraudAnalysis={report.fraudAnalysis} />
+            </ReportSection>
+
+            <ReportSection id="funding" num="05" eyebrow="Funding Opportunities" title="Funding & Grants Opportunities">
               {fundingParagraphs.map((paragraph) => (
                 <p className="report-p" key={paragraph}>{paragraph}</p>
               ))}
@@ -334,7 +348,7 @@ export default function ReportPage() {
               </div>
             </ReportSection>
 
-            <ReportSection id="actions" num="05" eyebrow="Recommended Actions" title="Recommended Next Actions">
+            <ReportSection id="actions" num="06" eyebrow="Recommended Actions" title="Recommended Next Actions">
               {actionParagraphs.map((paragraph) => (
                 <p className="report-p" key={paragraph}>{paragraph}</p>
               ))}

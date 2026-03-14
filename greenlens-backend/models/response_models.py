@@ -17,7 +17,7 @@ class AnalyzeResponse(BaseModel):
 class StatusResponse(BaseModel):
     jobId: str
     status: str          # queued | running | complete | error
-    currentStep: int     # 1-6
+    currentStep: int     # 1-7
     stepLabel: str
     progress: int        # 0-100
     error: Optional[str] = None
@@ -62,10 +62,55 @@ class RecommendationItem(BaseModel):
     impactLabel: str
 
 
+class SupportingDocumentReview(BaseModel):
+    fileName: str
+    documentType: str
+    issuer: Optional[str] = None
+    issueDate: Optional[str] = None
+    referenceId: Optional[str] = None
+    totalAmount: Optional[float] = None
+    matchStatus: str
+    matchedVendor: Optional[str] = None
+    matchedDate: Optional[str] = None
+    matchedAmount: Optional[float] = None
+    amountDelta: Optional[float] = None
+    parserNotes: list[str] = []
+
+
+class FraudFlag(BaseModel):
+    severity: str
+    category: str
+    title: str
+    detail: str
+    documentName: Optional[str] = None
+    vendor: Optional[str] = None
+    transactionDate: Optional[str] = None
+    documentAmount: Optional[float] = None
+    matchedAmount: Optional[float] = None
+    recommendedAction: str
+
+
+class FraudAnalysisResponse(BaseModel):
+    overallRisk: str
+    riskScore: int
+    summary: str
+    supportingDocsReviewed: int
+    matchedDocuments: int
+    partialMatches: int
+    unmatchedDocuments: int
+    duplicateDocuments: int
+    verifiedSpendAmount: float
+    reviewedVendorSpendAmount: float
+    verifiedSpendPct: int
+    flags: list[FraudFlag]
+    documents: list[SupportingDocumentReview]
+
+
 class ReportSections(BaseModel):
     executiveSummary: str
     emissionsNarrative: str
     complianceNarrative: str
+    fraudNarrative: str
     fundingNarrative: str
     actionsNarrative: str
 
@@ -97,6 +142,7 @@ class ReportResponse(BaseModel):
     emissions: EmissionsResponse
     compliance: list[ComplianceItem]
     complianceReadinessPct: int
+    fraudAnalysis: FraudAnalysisResponse
     grants: list[GrantItem]
     totalGrantsAvailable: str
     recommendations: list[RecommendationItem]

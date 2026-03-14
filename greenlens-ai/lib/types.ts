@@ -38,6 +38,50 @@ export interface Recommendation {
   impactLabel: string;
 }
 
+export interface SupportingDocumentReview {
+  fileName: string;
+  documentType: string;
+  issuer?: string | null;
+  issueDate?: string | null;
+  referenceId?: string | null;
+  totalAmount?: number | null;
+  matchStatus: 'matched' | 'partial' | 'unmatched' | string;
+  matchedVendor?: string | null;
+  matchedDate?: string | null;
+  matchedAmount?: number | null;
+  amountDelta?: number | null;
+  parserNotes: string[];
+}
+
+export interface FraudFlag {
+  severity: 'high' | 'medium' | 'low' | string;
+  category: string;
+  title: string;
+  detail: string;
+  documentName?: string | null;
+  vendor?: string | null;
+  transactionDate?: string | null;
+  documentAmount?: number | null;
+  matchedAmount?: number | null;
+  recommendedAction: string;
+}
+
+export interface FraudAnalysis {
+  overallRisk: 'high' | 'medium' | 'low' | 'not_assessed' | string;
+  riskScore: number;
+  summary: string;
+  supportingDocsReviewed: number;
+  matchedDocuments: number;
+  partialMatches: number;
+  unmatchedDocuments: number;
+  duplicateDocuments: number;
+  verifiedSpendAmount: number;
+  reviewedVendorSpendAmount: number;
+  verifiedSpendPct: number;
+  flags: FraudFlag[];
+  documents: SupportingDocumentReview[];
+}
+
 // Compliance items
 export interface ComplianceItem {
   framework: string;
@@ -73,6 +117,7 @@ export interface ReportSections {
   executiveSummary: string;
   emissionsNarrative: string;
   complianceNarrative: string;
+  fraudNarrative: string;
   fundingNarrative: string;
   actionsNarrative: string;
 }
@@ -108,6 +153,7 @@ export interface ReportResponse {
   emissions: EmissionsData;
   compliance: ComplianceItem[];
   complianceReadinessPct: number;
+  fraudAnalysis: FraudAnalysis;
   grants: Grant[];
   totalGrantsAvailable: string;
   recommendations: Recommendation[];

@@ -9,7 +9,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 5278 >>
+<< /Length 5155 >>
 stream
 1.00 w 0.000 0.380 0.620 rg 36.00 724.00 540.00 42.00 re f
 BT /F2 20 Tf 1.000 1.000 1.000 rg 1 0 0 1 52.00 741.00 Tm (Sysco Toronto) Tj ET
@@ -70,11 +70,10 @@ BT /F2 11 Tf 0.160 0.190 0.230 rg 1 0 0 1 372.00 186.00 Tm (Amount Due) Tj ET
 BT /F2 15 Tf 0.000 0.380 0.620 rg 1 0 0 1 484.00 186.00 Tm ($8,100.00) Tj ET
 1.00 w 1.000 1.000 1.000 rg 0.830 0.850 0.880 RG 36.00 98.00 296.00 128.00 re B
 BT /F2 8 Tf 0.420 0.470 0.530 rg 1 0 0 1 50.00 208.00 Tm (VENDOR NOTES) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 188.00 Tm (This polished supplier invoice is) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 174.00 Tm (intentionally matched to a representative) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 160.00 Tm (food-supply ledger amount so GreenLens can) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 146.00 Tm (demonstrate successful document verification) Tj ET
-BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 132.00 Tm (alongside fraud screening.) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 188.00 Tm (Intentional duplicate copy for fraud-signal) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 174.00 Tm (testing. Upload this only when you want) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 160.00 Tm (GreenLens to surface a duplicate-invoice) Tj ET
+BT /F1 10 Tf 0.270 0.310 0.360 rg 1 0 0 1 50.00 146.00 Tm (finding.) Tj ET
 BT /F1 9 Tf 0.430 0.480 0.540 rg 1 0 0 1 50.00 112.00 Tm (Reference: Please include invoice number with remittance.) Tj ET
 endstream
 endobj
@@ -94,11 +93,11 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000261 00000 n 
-0000005591 00000 n 
-0000005661 00000 n 
-0000005736 00000 n 
+0000005468 00000 n 
+0000005538 00000 n 
+0000005613 00000 n 
 trailer
 << /Size 8 /Root 1 0 R >>
 startxref
-5804
+5681
 %%EOF

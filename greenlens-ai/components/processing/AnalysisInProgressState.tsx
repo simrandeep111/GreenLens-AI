@@ -56,7 +56,7 @@ export default function AnalysisInProgressState({
           <div className="analysis-pending-meta">
             <div className="analysis-pending-pill">{statusLabel}</div>
             <div className="analysis-pending-copy">
-              {currentStep > 0 ? `Step ${currentStep} of 6` : 'Preparing your ESG workflow'}
+              {currentStep > 0 ? `Step ${currentStep} of 7` : 'Preparing your ESG workflow'}
             </div>
           </div>
 

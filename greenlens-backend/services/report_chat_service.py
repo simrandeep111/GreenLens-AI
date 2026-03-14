@@ -20,6 +20,7 @@ STOPWORDS = {
 TOPIC_KEYWORDS = {
     "emissions": {"emission", "emissions", "scope", "carbon", "footprint", "intensity", "heating", "electricity"},
     "compliance": {"compliance", "cbca", "osfi", "b-15", "gri", "ghg", "tcfd", "disclosure", "regulation"},
+    "fraud": {"fraud", "document", "documents", "receipt", "invoice", "bill", "bills", "duplicate", "mismatch", "assurance", "supporting"},
     "funding": {"grant", "grants", "funding", "rebate", "credit", "incentive", "sred", "sr&ed", "program"},
     "actions": {"action", "actions", "recommendation", "recommendations", "improve", "priority", "next"},
     "score": {"score", "grade", "environmental", "social", "governance", "advanced", "leading", "emerging"},
@@ -47,7 +48,7 @@ def _tokenize(text: str) -> set[str]:
 
 def _detect_topics(tokens: set[str]) -> set[str]:
     topics = {topic for topic, keywords in TOPIC_KEYWORDS.items() if tokens & keywords}
-    return topics or {"emissions", "compliance", "funding", "actions", "score"}
+    return topics or {"emissions", "compliance", "fraud", "funding", "actions", "score"}
 
 
 def _first_sentences(text: str, max_len: int = 220) -> str:
@@ -63,6 +64,7 @@ def _build_report_chunks(report: dict) -> list[RetrievedChunk]:
     score = report["score"]
     emissions = report["emissions"]
     sections = report["reportSections"]
+    fraud_analysis = report.get("fraudAnalysis", {})
 
     chunks = [
         RetrievedChunk(
@@ -108,6 +110,15 @@ def _build_report_chunks(report: dict) -> list[RetrievedChunk]:
             base_score=1.1,
         ),
         RetrievedChunk(
+            chunk_id="report-fraud-narrative",
+            title="Supporting Documents & Fraud Signals",
+            source_label="Report section",
+            content=sections.get("fraudNarrative", ""),
+            section_id="fraud",
+            topic="fraud",
+            base_score=1.1,
+        ),
+        RetrievedChunk(
             chunk_id="report-funding-narrative",
             title="Funding Opportunities",
             source_label="Report section",
@@ -126,6 +137,53 @@ def _build_report_chunks(report: dict) -> list[RetrievedChunk]:
             base_score=1.1,
         ),
     ]
+
+    if fraud_analysis:
+        chunks.append(
+            RetrievedChunk(
+                chunk_id="fraud-overview",
+                title="Document assurance overview",
+                source_label="Fraud analysis",
+                content=(
+                    f"Overall risk is {fraud_analysis.get('overallRisk', 'not_assessed')} "
+                    f"with score {fraud_analysis.get('riskScore', 0)}/100. "
+                    f"{fraud_analysis.get('summary', '')}"
+                ),
+                section_id="fraud",
+                topic="fraud",
+                base_score=1.0,
+            )
+        )
+
+    for index, item in enumerate(fraud_analysis.get("flags", []), start=1):
+        chunks.append(
+            RetrievedChunk(
+                chunk_id=f"fraud-flag-{index}",
+                title=item["title"],
+                source_label="Fraud flag",
+                content=f"[{item['severity']}] {item['detail']} Recommended action: {item['recommendedAction']}",
+                section_id="fraud",
+                topic="fraud",
+                base_score=0.95,
+            )
+        )
+
+    for index, item in enumerate(fraud_analysis.get("documents", []), start=1):
+        chunks.append(
+            RetrievedChunk(
+                chunk_id=f"fraud-document-{index}",
+                title=item["fileName"],
+                source_label="Supporting document review",
+                content=(
+                    f"{item['documentType']} from {item.get('issuer') or 'unknown issuer'} "
+                    f"has match status {item['matchStatus']}. Matched vendor: {item.get('matchedVendor') or 'none'}. "
+                    f"Amount delta: {item.get('amountDelta')}. Parser notes: {'; '.join(item.get('parserNotes', [])) or 'none'}."
+                ),
+                section_id="fraud",
+                topic="fraud",
+                base_score=0.85,
+            )
+        )
 
     for index, item in enumerate(report.get("compliance", []), start=1):
         chunks.append(
