@@ -1,4 +1,4 @@
-**GreenLens AI**
+# **GreenLens AI**
 
 GreenLens AI is a full-stack ESG intelligence platform built for Canadian SMBs. It turns operational and financial records into a structured ESG assessment, including emissions across Scope 1, Scope 2, and Scope 3, a deterministic ESG score, compliance guidance, matched funding programs, supporting-document assurance, fraud-signal detection, and a generated executive report.
 
