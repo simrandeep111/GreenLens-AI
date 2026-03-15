@@ -29,9 +29,34 @@ function buildCompleteStatus(jobId: string): JobStatus {
   };
 }
 
+function normalizeTopFindings(findings: string[] | null | undefined): string[] {
+  const seen = new Set<string>();
+  const normalized: string[] = [];
+
+  for (const finding of findings ?? []) {
+    const trimmedFinding = finding.trim();
+    if (!trimmedFinding) {
+      continue;
+    }
+
+    const dedupeKey = trimmedFinding.toLocaleLowerCase();
+    if (seen.has(dedupeKey)) {
+      continue;
+    }
+
+    seen.add(dedupeKey);
+    normalized.push(trimmedFinding);
+  }
+
+  return normalized;
+}
+
 function buildFraudAlertFromSession(session: AnalysisSession | null | undefined): FraudAlert | null {
   if (session?.status?.fraudAlert?.hasIssues) {
-    return session.status.fraudAlert;
+    return {
+      ...session.status.fraudAlert,
+      topFindings: normalizeTopFindings(session.status.fraudAlert.topFindings),
+    };
   }
 
   const normalizedReport = normalizeReport(session?.report);
@@ -53,10 +78,10 @@ function buildFraudAlertFromSession(session: AnalysisSession | null | undefined)
     detail: fraudAnalysis.summary,
     flagCount: fraudAnalysis.flags.length,
     anomalyCount: flaggedAnomalies.length,
-    topFindings: [
+    topFindings: normalizeTopFindings([
       ...fraudAnalysis.flags.map((flag) => flag.title),
       ...flaggedAnomalies.map((item) => item.testName),
-    ].slice(0, 3),
+    ]).slice(0, 3),
   };
 }
 
@@ -240,8 +265,8 @@ export default function ProcessingPage() {
             </div>
             {fraudAlert.topFindings.length > 0 ? (
               <div className="processing-fraud-tags">
-                {fraudAlert.topFindings.map((finding) => (
-                  <div key={finding} className="processing-fraud-tag">{finding}</div>
+                {fraudAlert.topFindings.map((finding, index) => (
+                  <div key={`${finding}-${index}`} className="processing-fraud-tag">{finding}</div>
                 ))}
               </div>
             ) : null}

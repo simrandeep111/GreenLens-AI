@@ -7,7 +7,6 @@ import ESGScoreCard from '@/components/dashboard/ESGScoreCard';
 import EmissionsChart from '@/components/dashboard/EmissionsChart';
 import ComplianceCard from '@/components/dashboard/ComplianceCard';
 import RecommendationList from '@/components/dashboard/RecommendationList';
-import DocumentAssuranceCard from '@/components/dashboard/DocumentAssuranceCard';
 import GrantsCard from '@/components/dashboard/GrantsCard';
 import BenchmarkChart from '@/components/dashboard/BenchmarkChart';
 import AnalysisInProgressState from '@/components/processing/AnalysisInProgressState';
@@ -195,7 +194,6 @@ export default function DashboardPage() {
   const pendingComplianceItems = (report.compliance ?? []).filter((item) => item.status !== 'pass').length;
   const emissions = report.emissions;
   const score = report.score;
-  const fraudAnalysis = report.fraudAnalysis;
 
   return (
     <div className="page-container">
@@ -320,7 +318,6 @@ export default function DashboardPage() {
           </div>
           <div className="dash-right">
             <RecommendationList recommendations={report.recommendations ?? []} />
-            <DocumentAssuranceCard fraudAnalysis={fraudAnalysis} />
             <GrantsCard grants={report.grants ?? []} />
           </div>
         </div>

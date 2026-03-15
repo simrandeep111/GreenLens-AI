@@ -133,6 +133,9 @@ def run_smoke_tests() -> None:
     assert with_docs_status["progress"] == 100
     assert with_docs_status["fraudAlert"]["hasIssues"] is True
     assert with_docs_status["fraudAlert"]["flagCount"] >= 1
+    assert len(with_docs_status["fraudAlert"]["topFindings"]) == len(
+        set(item.casefold() for item in with_docs_status["fraudAlert"]["topFindings"])
+    )
     _assert_core_report_shape(with_docs_report)
     assert with_docs_report["fraudAnalysis"]["supportingDocsReviewed"] == 6
     assert len(with_docs_report["fraudAnalysis"]["documents"]) == 6

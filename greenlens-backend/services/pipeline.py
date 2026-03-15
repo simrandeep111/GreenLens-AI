@@ -128,10 +128,23 @@ def _build_fraud_alert(fraud_analysis: dict) -> dict | None:
     if not flags and not anomalies:
         return None
 
-    top_findings = [
+    raw_findings = [
         *(flag.get("title", "Flagged finding") for flag in flags[:2]),
         *(item.get("testName", "Transaction anomaly") for item in anomalies[:2]),
     ]
+    top_findings: list[str] = []
+    seen_findings: set[str] = set()
+    for finding in raw_findings:
+        normalized_finding = str(finding).strip()
+        if not normalized_finding:
+            continue
+
+        dedupe_key = normalized_finding.casefold()
+        if dedupe_key in seen_findings:
+            continue
+
+        seen_findings.add(dedupe_key)
+        top_findings.append(normalized_finding)
 
     return {
         "hasIssues": True,

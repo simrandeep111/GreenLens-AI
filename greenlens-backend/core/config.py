@@ -22,7 +22,7 @@ for d in [UPLOADS_DIR, PROCESSED_DIR]:
 
 # ── API Keys ───────────────────────────────────────────────────────────
 MOORCHEH_API_KEY = os.getenv("MOORCHEH_API_KEY", "")
-MOORCHEH_MODEL = "anthropic.claude-sonnet-4-5-20250929-v1:0"
+MOORCHEH_MODEL = os.getenv("MOORCHEH_MODEL", "anthropic.claude-sonnet-4-20250514-v1:0")
 MOORCHEH_BASE_URL = "https://api.moorcheh.ai/v1"
 
 # ── Frontend CORS ─────────────────────────────────────────────────────
