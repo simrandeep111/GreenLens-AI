@@ -66,6 +66,25 @@ export interface FraudFlag {
   recommendedAction: string;
 }
 
+export interface TransactionAnomaly {
+  testName: string;
+  status: 'pass' | 'flag' | 'insufficient_data';
+  severity: 'low' | 'medium' | 'high' | 'info';
+  detail: string;
+  observed?: Record<string, number>;
+  expected?: Record<string, number>;
+  chiSquared?: number;
+  sampleSize?: number;
+  roundPct?: number;
+  roundCount?: number;
+  totalCount?: number;
+  weekendTxCount?: number;
+  weekendTxPct?: number;
+  sameDayDuplicates?: number;
+  monthEndClusterPct?: number;
+  findings?: string[];
+}
+
 export interface FraudAnalysis {
   overallRisk: 'high' | 'medium' | 'low' | 'not_assessed' | string;
   riskScore: number;
@@ -80,6 +99,7 @@ export interface FraudAnalysis {
   verifiedSpendPct: number;
   flags: FraudFlag[];
   documents: SupportingDocumentReview[];
+  transactionAnomalies?: TransactionAnomaly[];
 }
 
 // Compliance items
@@ -144,6 +164,17 @@ export interface ReportChatMessage {
   answerSource?: 'llm' | 'fallback' | string;
 }
 
+export interface FraudAlert {
+  hasIssues: boolean;
+  overallRisk: 'high' | 'medium' | 'low' | 'not_assessed' | string;
+  riskScore: number;
+  headline: string;
+  detail: string;
+  flagCount: number;
+  anomalyCount: number;
+  topFindings: string[];
+}
+
 export interface ReportResponse {
   reportId: string;
   generatedAt: string;
@@ -174,6 +205,7 @@ export interface JobStatus {
   stepLabel: string;
   progress: number;
   error?: string | null;
+  fraudAlert?: FraudAlert | null;
 }
 
 export interface AnalysisSession {

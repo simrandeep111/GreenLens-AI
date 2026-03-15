@@ -6,8 +6,9 @@ import Link from 'next/link';
 import ProcessingSteps from '@/components/processing/ProcessingSteps';
 import ProgressBar from '@/components/processing/ProgressBar';
 import { getAnalysisStatus, getBackendMeta, getReport } from '@/lib/api';
-import { AnalysisSession, JobStatus } from '@/lib/types';
+import { AnalysisSession, FraudAlert, JobStatus } from '@/lib/types';
 import { loadSessionForBackend, updateSession } from '@/lib/session';
+import { normalizeReport } from '@/lib/report';
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) {
@@ -26,6 +27,47 @@ function buildCompleteStatus(jobId: string): JobStatus {
     progress: 100,
     error: null,
   };
+}
+
+function buildFraudAlertFromSession(session: AnalysisSession | null | undefined): FraudAlert | null {
+  if (session?.status?.fraudAlert?.hasIssues) {
+    return session.status.fraudAlert;
+  }
+
+  const normalizedReport = normalizeReport(session?.report);
+  const fraudAnalysis = normalizedReport?.fraudAnalysis;
+  if (!fraudAnalysis) {
+    return null;
+  }
+
+  const flaggedAnomalies = (fraudAnalysis.transactionAnomalies ?? []).filter((item) => item.status === 'flag');
+  if (fraudAnalysis.flags.length === 0 && flaggedAnomalies.length === 0) {
+    return null;
+  }
+
+  return {
+    hasIssues: true,
+    overallRisk: fraudAnalysis.overallRisk,
+    riskScore: fraudAnalysis.riskScore,
+    headline: 'Potential fraud indicators were detected during assurance review.',
+    detail: fraudAnalysis.summary,
+    flagCount: fraudAnalysis.flags.length,
+    anomalyCount: flaggedAnomalies.length,
+    topFindings: [
+      ...fraudAnalysis.flags.map((flag) => flag.title),
+      ...flaggedAnomalies.map((item) => item.testName),
+    ].slice(0, 3),
+  };
+}
+
+function getFraudTone(risk: string) {
+  if (risk === 'high') {
+    return 'high';
+  }
+  if (risk === 'medium') {
+    return 'medium';
+  }
+  return 'low';
 }
 
 function EmptyState({
@@ -160,6 +202,8 @@ export default function ProcessingPage() {
     ? session.status ?? buildCompleteStatus(session.jobId)
     : session.status;
   const pct = session.report ? 100 : displayStatus?.progress ?? 0;
+  const fraudAlert = buildFraudAlertFromSession(session);
+  const fraudTone = fraudAlert ? getFraudTone(fraudAlert.overallRisk) : 'low';
 
   return (
     <div className="page-container">
@@ -177,6 +221,33 @@ export default function ProcessingPage() {
         </p>
 
         <ProcessingSteps status={displayStatus ?? null} />
+
+        {fraudAlert ? (
+          <div className={`processing-fraud-alert ${fraudTone}`}>
+            <div className="processing-fraud-alert-head">
+              <div className="processing-fraud-alert-title">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" width="14" height="14">
+                  <path d="M8 2l6 11H2L8 2z"/><path d="M8 6.2v3.2M8 11.6h.01"/>
+                </svg>
+                Fraud Watch
+              </div>
+              <div className="processing-fraud-pill">
+                {fraudAlert.overallRisk.toUpperCase()} · {fraudAlert.riskScore}/100
+              </div>
+            </div>
+            <div className="processing-fraud-alert-copy">
+              {fraudAlert.headline} {fraudAlert.detail}
+            </div>
+            {fraudAlert.topFindings.length > 0 ? (
+              <div className="processing-fraud-tags">
+                {fraudAlert.topFindings.map((finding) => (
+                  <div key={finding} className="processing-fraud-tag">{finding}</div>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+
         <ProgressBar pct={pct} />
 
         <div className="processing-note">

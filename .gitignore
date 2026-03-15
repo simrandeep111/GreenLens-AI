@@ -5,6 +5,8 @@
 **/.next/
 **/coverage/
 **/*.tsbuildinfo
+**/.npm-cache/
+**/*.log
 greenlens-ai/next-env.d.ts
 
 **/__pycache__/

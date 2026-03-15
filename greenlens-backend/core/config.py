@@ -7,10 +7,10 @@ from pathlib import Path
 from typing import Dict
 from dotenv import load_dotenv
 
-load_dotenv()
-
 # ── Paths ──────────────────────────────────────────────────────────────
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
+
 DATA_DIR = BASE_DIR / "data"
 UPLOADS_DIR = DATA_DIR / "uploads"
 PROCESSED_DIR = DATA_DIR / "processed"

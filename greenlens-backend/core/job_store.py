@@ -24,6 +24,7 @@ def create_job(job_id: str, upload_id: str, company: dict, governance_answers: L
             "progress": 0,
             "error": None,
             "result": None,
+            "fraud_alert": None,
         }
 
 
@@ -44,6 +45,12 @@ def complete_job(job_id: str, result: dict) -> None:
             _jobs[job_id]["step_label"] = "Complete"
             _jobs[job_id]["progress"] = 100
             _jobs[job_id]["result"] = result
+
+
+def set_job_fraud_alert(job_id: str, fraud_alert: dict | None) -> None:
+    with _lock:
+        if job_id in _jobs:
+            _jobs[job_id]["fraud_alert"] = fraud_alert
 
 
 def fail_job(job_id: str, error: str) -> None:

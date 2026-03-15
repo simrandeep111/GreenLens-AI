@@ -8,11 +8,11 @@ from pydantic import BaseModel, Field
 
 
 class CompanyInfo(BaseModel):
-    name: str
-    province: str
-    industry: str
-    employees: int
-    revenue: str  # e.g. "$2,400,000"
+    name: str = Field(min_length=1)
+    province: str = Field(min_length=1)
+    industry: str = Field(min_length=1)
+    employees: int = Field(gt=0)
+    revenue: str = Field(min_length=1)  # e.g. "$2,400,000"
 
 
 class AnalyzeRequest(BaseModel):

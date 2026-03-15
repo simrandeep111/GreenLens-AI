@@ -213,11 +213,19 @@ export default function ReportCopilot({ jobId, companyName }: ReportCopilotProps
       return;
     }
 
-    const target = document.getElementById(`section-${sectionId}`);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setIsOpen(false);
+    if (typeof window !== 'undefined') {
+      const targetTab = sectionId.startsWith('fraud') ? 'fraud' : 'esg';
+      window.dispatchEvent(
+        new CustomEvent('greenlens-report-tab-jump', {
+          detail: {
+            tab: targetTab,
+            sectionId,
+          },
+        }),
+      );
     }
+
+    setIsOpen(false);
   };
 
   const toggleWidget = () => {

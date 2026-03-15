@@ -1,3 +1,4 @@
+import { normalizeReport } from '@/lib/report';
 import { AnalysisSession, CompanyData } from '@/lib/types';
 
 const STORAGE_KEY = 'greenlens-analysis-session';
@@ -5,19 +6,19 @@ const CHAT_STORAGE_PREFIX = 'greenlens-report-chat:';
 const CHAT_OPEN_PREFIX = 'greenlens-report-chat-open:';
 
 export const DEFAULT_COMPANY: CompanyData = {
-  name: 'Maple Leaf Catering Co.',
-  province: 'Ontario',
-  industry: 'Food & Beverage',
-  employees: 48,
-  revenue: '$2,400,000',
+  name: '',
+  province: '',
+  industry: '',
+  employees: 0,
+  revenue: '',
 };
 
-export const DEFAULT_GOVERNANCE_ANSWERS = ['Yes', 'Yes', 'No', 'Yes'];
+export const DEFAULT_GOVERNANCE_ANSWERS = ['No', 'No', 'No', 'No'];
 
 export function createEmptySession(): AnalysisSession {
   return {
-    company: DEFAULT_COMPANY,
-    governanceAnswers: DEFAULT_GOVERNANCE_ANSWERS,
+    company: { ...DEFAULT_COMPANY },
+    governanceAnswers: [...DEFAULT_GOVERNANCE_ANSWERS],
     csvFileName: null,
     pdfFileNames: [],
     uploadId: null,
@@ -48,8 +49,9 @@ export function loadSession(): AnalysisSession | null {
       ...createEmptySession(),
       ...parsed,
       company: { ...DEFAULT_COMPANY, ...parsed.company },
-      governanceAnswers: parsed.governanceAnswers ?? DEFAULT_GOVERNANCE_ANSWERS,
+      governanceAnswers: parsed.governanceAnswers ?? [...DEFAULT_GOVERNANCE_ANSWERS],
       pdfFileNames: parsed.pdfFileNames ?? [],
+      report: normalizeReport(parsed.report),
     };
   } catch {
     return null;
@@ -61,7 +63,16 @@ export function saveSession(session: AnalysisSession): void {
     return;
   }
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+  window.localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify({
+      ...session,
+      company: { ...DEFAULT_COMPANY, ...session.company },
+      governanceAnswers: session.governanceAnswers ?? [...DEFAULT_GOVERNANCE_ANSWERS],
+      pdfFileNames: session.pdfFileNames ?? [],
+      report: normalizeReport(session.report),
+    }),
+  );
 }
 
 export function updateSession(patch: Partial<AnalysisSession>): AnalysisSession | null {
@@ -70,6 +81,7 @@ export function updateSession(patch: Partial<AnalysisSession>): AnalysisSession 
     ...current,
     ...patch,
     company: patch.company ? { ...current.company, ...patch.company } : current.company,
+    report: patch.report !== undefined ? normalizeReport(patch.report) : current.report,
   };
 
   saveSession(next);

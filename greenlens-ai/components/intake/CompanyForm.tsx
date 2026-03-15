@@ -37,10 +37,11 @@ export default function CompanyForm({ company, disabled = false, onChange }: Com
             disabled={disabled}
             onChange={(event) => updateField('province', event.target.value)}
           >
-            <option>Ontario</option>
-            <option>British Columbia</option>
-            <option>Alberta</option>
-            <option>Quebec</option>
+            <option value="">Select province</option>
+            <option value="Ontario">Ontario</option>
+            <option value="British Columbia">British Columbia</option>
+            <option value="Alberta">Alberta</option>
+            <option value="Quebec">Quebec</option>
           </select>
         </div>
       </div>
@@ -53,10 +54,11 @@ export default function CompanyForm({ company, disabled = false, onChange }: Com
             disabled={disabled}
             onChange={(event) => updateField('industry', event.target.value)}
           >
-            <option>Food &amp; Beverage</option>
-            <option>Technology</option>
-            <option>Manufacturing</option>
-            <option>Retail</option>
+            <option value="">Select industry</option>
+            <option value="Food &amp; Beverage">Food &amp; Beverage</option>
+            <option value="Technology">Technology</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Retail">Retail</option>
           </select>
         </div>
         <div className="form-group">

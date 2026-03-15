@@ -20,7 +20,7 @@ STOPWORDS = {
 TOPIC_KEYWORDS = {
     "emissions": {"emission", "emissions", "scope", "carbon", "footprint", "intensity", "heating", "electricity"},
     "compliance": {"compliance", "cbca", "osfi", "b-15", "gri", "ghg", "tcfd", "disclosure", "regulation"},
-    "fraud": {"fraud", "document", "documents", "receipt", "invoice", "bill", "bills", "duplicate", "mismatch", "assurance", "supporting"},
+    "fraud": {"fraud", "document", "documents", "receipt", "invoice", "bill", "bills", "duplicate", "mismatch", "assurance", "supporting", "benford", "round", "temporal", "weekend", "anomaly"},
     "funding": {"grant", "grants", "funding", "rebate", "credit", "incentive", "sred", "sr&ed", "program"},
     "actions": {"action", "actions", "recommendation", "recommendations", "improve", "priority", "next"},
     "score": {"score", "grade", "environmental", "social", "governance", "advanced", "leading", "emerging"},
@@ -182,6 +182,22 @@ def _build_report_chunks(report: dict) -> list[RetrievedChunk]:
                 section_id="fraud",
                 topic="fraud",
                 base_score=0.85,
+            )
+        )
+
+    for index, item in enumerate(fraud_analysis.get("transactionAnomalies", []), start=1):
+        chunks.append(
+            RetrievedChunk(
+                chunk_id=f"fraud-anomaly-{index}",
+                title=item.get("testName", f"Transaction anomaly {index}"),
+                source_label="Forensic ledger test",
+                content=(
+                    f"Status: {item.get('status', 'unknown')}. Severity: {item.get('severity', 'info')}. "
+                    f"{item.get('detail', '')}"
+                ),
+                section_id="fraud",
+                topic="fraud",
+                base_score=0.9,
             )
         )
 

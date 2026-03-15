@@ -1,3 +1,4 @@
+import { normalizeReport } from '@/lib/report';
 import { BackendMeta, CompanyData, JobStatus, ReportChatMessage, ReportChatResponse, ReportResponse } from '@/lib/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://127.0.0.1:8000';
@@ -78,7 +79,8 @@ export async function getBackendMeta(): Promise<BackendMeta> {
 }
 
 export async function getReport(jobId: string): Promise<ReportResponse> {
-  return requestJson<ReportResponse>(`/api/report/${jobId}`);
+  const report = await requestJson<Partial<ReportResponse>>(`/api/report/${jobId}`);
+  return normalizeReport(report) as ReportResponse;
 }
 
 export async function postReportChat(input: {

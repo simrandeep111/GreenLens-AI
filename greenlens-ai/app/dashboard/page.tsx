@@ -12,6 +12,7 @@ import GrantsCard from '@/components/dashboard/GrantsCard';
 import BenchmarkChart from '@/components/dashboard/BenchmarkChart';
 import AnalysisInProgressState from '@/components/processing/AnalysisInProgressState';
 import { ApiError, getAnalysisStatus, getBackendMeta, getReport } from '@/lib/api';
+import { normalizeReport } from '@/lib/report';
 import { loadSessionForBackend, updateSession } from '@/lib/session';
 import { AnalysisSession, JobStatus } from '@/lib/types';
 
@@ -188,9 +189,13 @@ export default function DashboardPage() {
     );
   }
 
-  const report = session.report;
-  const generatedDate = formatGeneratedDate(report.generatedAt);
-  const pendingComplianceItems = report.compliance.filter((item) => item.status !== 'pass').length;
+  const report = normalizeReport(session.report) as NonNullable<AnalysisSession['report']>;
+  const company = report.company;
+  const generatedDate = report.generatedAt ? formatGeneratedDate(report.generatedAt) : 'N/A';
+  const pendingComplianceItems = (report.compliance ?? []).filter((item) => item.status !== 'pass').length;
+  const emissions = report.emissions;
+  const score = report.score;
+  const fraudAnalysis = report.fraudAnalysis;
 
   return (
     <div className="page-container">
@@ -198,7 +203,7 @@ export default function DashboardPage() {
         <div className="dash-header">
           <div>
             <div className="dash-company-meta">
-              {report.company.name} &nbsp;·&nbsp; <span>{report.company.province}</span> &nbsp;·&nbsp; {report.company.industry} &nbsp;·&nbsp; {report.company.employees} employees
+              {company.name} &nbsp;·&nbsp; <span>{company.province}</span> &nbsp;·&nbsp; {company.industry} &nbsp;·&nbsp; {company.employees} employees
             </div>
             <h1 className="dash-title">ESG Intelligence Dashboard</h1>
             <div className="dash-date">Report period: FY 2024 &nbsp;·&nbsp; Generated {generatedDate}</div>
@@ -227,7 +232,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="score-hero-grid">
-          <ESGScoreCard score={report.score} benchmark={report.emissions.benchmark} />
+          <ESGScoreCard score={score} benchmark={emissions.benchmark} />
 
           <div className="kpi-right-grid">
             <div className="kpi-card accent-tint">
@@ -237,7 +242,7 @@ export default function DashboardPage() {
                 </svg>
                 Total Emissions
               </div>
-              <div className="kpi-value">{report.emissions.totalTCO2e.toFixed(1)}</div>
+              <div className="kpi-value">{(emissions.totalTCO2e ?? 0).toFixed(1)}</div>
               <div className="kpi-sub">tCO₂e this fiscal year</div>
               <div className="kpi-badge green">Across 3 reporting scopes</div>
             </div>
@@ -249,7 +254,7 @@ export default function DashboardPage() {
                 </svg>
                 Compliance Readiness
               </div>
-              <div className="kpi-value">{report.complianceReadinessPct}%</div>
+              <div className="kpi-value">{report.complianceReadinessPct ?? 0}%</div>
               <div className="kpi-sub">Across assessed frameworks</div>
               <div className="kpi-badge navy">{pendingComplianceItems} actions pending</div>
             </div>
@@ -261,23 +266,23 @@ export default function DashboardPage() {
                 </svg>
                 Grants Available
               </div>
-              <div className="kpi-value">{report.totalGrantsAvailable}</div>
+              <div className="kpi-value">{report.totalGrantsAvailable ?? '$0'}</div>
               <div className="kpi-sub">Matched funding programs</div>
-              <div className="kpi-badge amber">{report.grants.length} eligible</div>
+              <div className="kpi-badge amber">{(report.grants ?? []).length} eligible</div>
             </div>
 
             <div className="kpi-card" style={{ gridColumn: 'span 3' }}>
               <div className="kpi-label">Emission Intensity</div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '1px', background: 'var(--border)', borderRadius: '4px', overflow: 'hidden' }}>
                 {[
-                  { scope: 'Scope 1 — Direct', val: report.emissions.scope1, sub: 'Owned operations and fleet' },
-                  { scope: 'Scope 2 — Energy', val: report.emissions.scope2, sub: 'Purchased electricity and utilities' },
-                  { scope: 'Scope 3 — Value Chain', val: report.emissions.scope3, sub: 'Supply chain, waste, and travel' },
+                  { scope: 'Scope 1 — Direct', val: emissions.scope1 ?? 0, sub: 'Owned operations and fleet' },
+                  { scope: 'Scope 2 — Energy', val: emissions.scope2 ?? 0, sub: 'Purchased electricity and utilities' },
+                  { scope: 'Scope 3 — Value Chain', val: emissions.scope3 ?? 0, sub: 'Supply chain, waste, and travel' },
                 ].map((item) => (
                   <div key={item.scope} style={{ background: 'var(--surface)', padding: '14px 16px' }}>
                     <div style={{ fontSize: '10.5px', fontWeight: 600, color: 'var(--text-tertiary)', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: '6px' }}>{item.scope}</div>
                     <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '20px', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '2px' }}>
-                      {item.val.toFixed(1)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'var(--text-tertiary)' }}>tCO₂e</span>
+                      {(item.val ?? 0).toFixed(1)} <span style={{ fontSize: '12px', fontWeight: 400, color: 'var(--text-tertiary)' }}>tCO₂e</span>
                     </div>
                     <div style={{ fontSize: '11.5px', color: 'var(--text-secondary)' }}>{item.sub}</div>
                   </div>
@@ -289,18 +294,18 @@ export default function DashboardPage() {
 
         <div className="dash-main-grid">
           <div className="dash-left">
-            <EmissionsChart breakdown={report.emissions.breakdown} />
-            <ComplianceCard items={report.compliance} readinessPct={report.complianceReadinessPct} />
+            <EmissionsChart breakdown={emissions.breakdown ?? []} />
+            <ComplianceCard items={report.compliance ?? []} readinessPct={report.complianceReadinessPct ?? 0} />
             <div className="card">
               <div className="card-header"><span className="card-title">Company Overview</span></div>
               <div className="card-body">
                 <div className="company-stat-grid">
                   {[
-                    { label: 'Business Name', val: report.company.name },
-                    { label: 'Annual Revenue', val: report.company.revenue },
-                    { label: 'Employees', val: `${report.company.employees} FTE` },
-                    { label: 'Province', val: report.company.province },
-                    { label: 'Industry', val: report.company.industry },
+                    { label: 'Business Name', val: company.name },
+                    { label: 'Annual Revenue', val: company.revenue },
+                    { label: 'Employees', val: `${company.employees} FTE` },
+                    { label: 'Province', val: company.province },
+                    { label: 'Industry', val: company.industry },
                     { label: 'Report Standard', val: 'GHG Protocol' },
                   ].map((stat) => (
                     <div className="co-stat" key={stat.label}>
@@ -311,12 +316,12 @@ export default function DashboardPage() {
                 </div>
               </div>
             </div>
-            <BenchmarkChart benchmark={report.emissions.benchmark} industry={report.company.industry} />
+            <BenchmarkChart benchmark={emissions.benchmark} industry={company.industry} />
           </div>
           <div className="dash-right">
-            <RecommendationList recommendations={report.recommendations} />
-            <DocumentAssuranceCard fraudAnalysis={report.fraudAnalysis} />
-            <GrantsCard grants={report.grants} />
+            <RecommendationList recommendations={report.recommendations ?? []} />
+            <DocumentAssuranceCard fraudAnalysis={fraudAnalysis} />
+            <GrantsCard grants={report.grants ?? []} />
           </div>
         </div>
       </div>

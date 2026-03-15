@@ -10,7 +10,7 @@ import traceback
 from datetime import datetime, timezone
 
 from core.config import UPLOADS_DIR, PROCESSED_DIR
-from core.job_store import get_job, update_step, complete_job, fail_job
+from core.job_store import get_job, update_step, complete_job, fail_job, set_job_fraud_alert
 
 from services.csv_parser import parse_csv
 from services.normalizer import normalize
@@ -118,6 +118,33 @@ def _generate_grants(grant_docs: list[dict]) -> tuple[list[dict], str]:
     return grants, f"${total:,}"
 
 
+def _build_fraud_alert(fraud_analysis: dict) -> dict | None:
+    flags = fraud_analysis.get("flags", [])
+    anomalies = [
+        item for item in fraud_analysis.get("transactionAnomalies", [])
+        if item.get("status") == "flag"
+    ]
+
+    if not flags and not anomalies:
+        return None
+
+    top_findings = [
+        *(flag.get("title", "Flagged finding") for flag in flags[:2]),
+        *(item.get("testName", "Transaction anomaly") for item in anomalies[:2]),
+    ]
+
+    return {
+        "hasIssues": True,
+        "overallRisk": fraud_analysis.get("overallRisk", "medium"),
+        "riskScore": int(fraud_analysis.get("riskScore", 0) or 0),
+        "headline": "Potential fraud indicators were detected while GreenLens was preparing the report.",
+        "detail": fraud_analysis.get("summary", ""),
+        "flagCount": len(flags),
+        "anomalyCount": len(anomalies),
+        "topFindings": top_findings[:3],
+    }
+
+
 def run_pipeline(job_id: str) -> None:
     """
     Main pipeline — runs in a background thread.
@@ -190,6 +217,7 @@ def run_pipeline(job_id: str) -> None:
         update_step(job_id, 6, "Verifying supporting documents and fraud signals", 84)
         support_documents = parse_supporting_documents(upload_dir)
         fraud_analysis = analyze_supporting_documents(df, support_documents)
+        set_job_fraud_alert(job_id, _build_fraud_alert(fraud_analysis))
 
         # ── Step 7: Generate report narrative ──
         update_step(job_id, 7, "Generating ESG report", 92)

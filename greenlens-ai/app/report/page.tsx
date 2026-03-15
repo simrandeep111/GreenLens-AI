@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import AnalysisInProgressState from '@/components/processing/AnalysisInProgressState';
+import FraudSidebar from '@/components/report/FraudSidebar';
 import ReportSidebar from '@/components/report/ReportSidebar';
 import ReportCopilot from '@/components/report/ReportCopilot';
 import ReportSection from '@/components/report/ReportSection';
 import EmissionsTable from '@/components/report/EmissionsTable';
 import SupportingDocumentsSection from '@/components/report/SupportingDocumentsSection';
 import { ApiError, getAnalysisStatus, getBackendMeta, getReport } from '@/lib/api';
+import { normalizeReport } from '@/lib/report';
 import { loadSessionForBackend, updateSession } from '@/lib/session';
 import { AnalysisSession, ComplianceItem, JobStatus } from '@/lib/types';
 
@@ -97,9 +99,12 @@ function getComplianceStatusCopy(status: ComplianceItem['status']) {
   };
 }
 
+type ReportTab = 'esg' | 'fraud';
+
 export default function ReportPage() {
   const [session, setSession] = useState<AnalysisSession | null | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<ReportTab>('esg');
 
   useEffect(() => {
     let cancelled = false;
@@ -183,6 +188,32 @@ export default function ReportPage() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleTabJump = (
+      event: Event,
+    ) => {
+      const customEvent = event as CustomEvent<{ tab?: ReportTab; sectionId?: string }>;
+      const nextTab = customEvent.detail?.tab ?? 'esg';
+      const sectionId = customEvent.detail?.sectionId;
+
+      setActiveTab(nextTab);
+
+      if (!sectionId) {
+        return;
+      }
+
+      window.setTimeout(() => {
+        const target = document.getElementById(`section-${sectionId}`);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 120);
+    };
+
+    window.addEventListener('greenlens-report-tab-jump', handleTabJump as EventListener);
+    return () => window.removeEventListener('greenlens-report-tab-jump', handleTabJump as EventListener);
+  }, []);
+
   if (session === undefined) {
     return (
       <EmptyState
@@ -220,15 +251,20 @@ export default function ReportPage() {
     );
   }
 
-  const report = session.report;
+  const report = normalizeReport(session.report) as NonNullable<AnalysisSession['report']>;
+  const company = report.company;
+  const score = report.score;
   const chatJobId = session.jobId ?? session.status?.jobId ?? null;
-  const generatedDate = formatGeneratedDate(report.generatedAt);
-  const executiveParagraphs = splitParagraphs(report.reportSections.executiveSummary);
-  const emissionsParagraphs = splitParagraphs(report.reportSections.emissionsNarrative);
-  const complianceParagraphs = splitParagraphs(report.reportSections.complianceNarrative);
-  const fraudParagraphs = splitParagraphs(report.reportSections.fraudNarrative);
-  const fundingParagraphs = splitParagraphs(report.reportSections.fundingNarrative);
-  const actionParagraphs = splitParagraphs(report.reportSections.actionsNarrative);
+  const generatedDate = report.generatedAt ? formatGeneratedDate(report.generatedAt) : 'N/A';
+  const sections = report.reportSections;
+  const emissions = report.emissions;
+  const fraudAnalysis = report.fraudAnalysis;
+  const executiveParagraphs = splitParagraphs(sections.executiveSummary ?? '');
+  const emissionsParagraphs = splitParagraphs(sections.emissionsNarrative ?? '');
+  const complianceParagraphs = splitParagraphs(sections.complianceNarrative ?? '');
+  const fraudParagraphs = splitParagraphs(sections.fraudNarrative ?? '');
+  const fundingParagraphs = splitParagraphs(sections.fundingNarrative ?? '');
+  const actionParagraphs = splitParagraphs(sections.actionsNarrative ?? '');
 
   return (
     <div className="page-container">
@@ -237,7 +273,7 @@ export default function ReportPage() {
           <div className="report-title-area">
             <div className="report-doc-label">ESG Intelligence Report</div>
             <h1 className="report-title">
-              {report.company.name}<br />
+              {company.name}<br />
               Environmental, Social &amp; Governance Assessment
             </h1>
             <p className="report-subtitle">
@@ -245,7 +281,7 @@ export default function ReportPage() {
             </p>
             <div className="report-meta-row">
               <div className="report-meta-item"><strong>Reference:</strong> {report.reportId}</div>
-              <div className="report-meta-item"><strong>Score:</strong> {report.score.total} / 100</div>
+              <div className="report-meta-item"><strong>Score:</strong> {score.total} / 100</div>
               <div className="report-meta-item"><strong>Generated:</strong> {generatedDate}</div>
               <div className="report-meta-item"><strong>Standard:</strong> GHG Protocol Corporate</div>
             </div>
@@ -266,106 +302,147 @@ export default function ReportPage() {
           </div>
         </div>
 
+        <div className="report-view-bar">
+          <div className="report-view-copy">
+            <div className="report-view-eyebrow">Report Views</div>
+            <div className="report-view-subtitle">
+              {activeTab === 'esg'
+                ? 'Review the full ESG narrative, compliance context, grants, and action plan.'
+                : 'Review supporting documents, forensic transaction tests, and fraud flags in a dedicated pane.'}
+            </div>
+          </div>
+          <div className="report-view-tabs" role="tablist" aria-label="Report views">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'esg'}
+              className={`report-view-tab ${activeTab === 'esg' ? 'active' : ''}`}
+              onClick={() => setActiveTab('esg')}
+            >
+              ESG Report
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={activeTab === 'fraud'}
+              className={`report-view-tab ${activeTab === 'fraud' ? 'active' : ''}`}
+              onClick={() => setActiveTab('fraud')}
+            >
+              Fraud Detection
+            </button>
+          </div>
+        </div>
+
         <div className="report-grid">
-          <ReportSidebar score={report.score} />
+          {activeTab === 'esg' ? <ReportSidebar score={score} /> : <FraudSidebar fraudAnalysis={fraudAnalysis} />}
 
           <div className="report-body">
-            <ReportSection id="exec" num="01" eyebrow="Executive Summary" title="Executive Summary">
-              {executiveParagraphs.map((paragraph) => (
-                <p className="report-p" key={paragraph}>{paragraph}</p>
-              ))}
-              <div className="report-callout">
-                <div className="report-callout-label">Key Metrics</div>
-                {report.emissions.totalTCO2e.toFixed(1)} tCO₂e total emissions · {report.complianceReadinessPct}% compliance readiness · {report.totalGrantsAvailable} in matched grants
-              </div>
-            </ReportSection>
+            {activeTab === 'esg' ? (
+              <>
+                <ReportSection id="exec" num="01" eyebrow="Executive Summary" title="Executive Summary">
+                  {executiveParagraphs.map((paragraph) => (
+                    <p className="report-p" key={paragraph}>{paragraph}</p>
+                  ))}
+                  <div className="report-callout">
+                    <div className="report-callout-label">Key Metrics</div>
+                    {(emissions.totalTCO2e ?? 0).toFixed(1)} tCO₂e total emissions · {report.complianceReadinessPct ?? 0}% compliance readiness · {report.totalGrantsAvailable ?? '$0'} in matched grants
+                  </div>
+                </ReportSection>
 
-            <ReportSection id="emissions" num="02" eyebrow="Emissions Overview" title="Emissions Overview">
-              {emissionsParagraphs.map((paragraph) => (
-                <p className="report-p" key={paragraph}>{paragraph}</p>
-              ))}
-              <EmissionsTable breakdown={report.emissions.breakdown} total={report.emissions.totalTCO2e} />
-              <p className="report-p">
-                Verified emissions intensity is <strong>{report.emissions.intensityKgPerRevenue.toFixed(1)} kgCO₂e per $1,000 revenue</strong>,
-                compared with a sector average of <strong>{report.emissions.benchmark.sectorAverage} kgCO₂e</strong> and a top quartile threshold of{' '}
-                <strong>{report.emissions.benchmark.topQuartile} kgCO₂e</strong>.
-              </p>
-            </ReportSection>
+                <ReportSection id="emissions" num="02" eyebrow="Emissions Overview" title="Emissions Overview">
+                  {emissionsParagraphs.map((paragraph) => (
+                    <p className="report-p" key={paragraph}>{paragraph}</p>
+                  ))}
+                  <EmissionsTable breakdown={emissions.breakdown ?? []} total={emissions.totalTCO2e ?? 0} />
+                  <p className="report-p">
+                    Verified emissions intensity is <strong>{(emissions.intensityKgPerRevenue ?? 0).toFixed(1)} kgCO₂e per $1,000 revenue</strong>,
+                    compared with a sector average of <strong>{emissions.benchmark?.sectorAverage ?? 0} kgCO₂e</strong> and a top quartile threshold of{' '}
+                    <strong>{emissions.benchmark?.topQuartile ?? 0} kgCO₂e</strong>.
+                  </p>
+                </ReportSection>
 
-            <ReportSection id="compliance" num="03" eyebrow="Compliance & Regulatory Insights" title="Compliance & Regulatory Insights">
-              {complianceParagraphs.map((paragraph) => (
-                <p className="report-p" key={paragraph}>{paragraph}</p>
-              ))}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '16px 0' }}>
-                {report.compliance.map((item) => {
-                  const statusCopy = getComplianceStatusCopy(item.status);
+                <ReportSection id="compliance" num="03" eyebrow="Compliance & Regulatory Insights" title="Compliance & Regulatory Insights">
+                  {complianceParagraphs.map((paragraph) => (
+                    <p className="report-p" key={paragraph}>{paragraph}</p>
+                  ))}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: '16px 0' }}>
+                    {(report.compliance ?? []).map((item) => {
+                      const statusCopy = getComplianceStatusCopy(item.status);
 
-                  return (
-                    <ComplianceFramework
-                      key={item.framework}
-                      title={item.framework}
-                      status={statusCopy.label}
-                      statusBg={statusCopy.statusBg}
-                      bg={statusCopy.bg}
-                      border={statusCopy.border}
-                      detail={item.detail}
-                    />
-                  );
-                })}
-              </div>
-            </ReportSection>
+                      return (
+                        <ComplianceFramework
+                          key={item.framework}
+                          title={item.framework}
+                          status={statusCopy.label}
+                          statusBg={statusCopy.statusBg}
+                          bg={statusCopy.bg}
+                          border={statusCopy.border}
+                          detail={item.detail}
+                        />
+                      );
+                    })}
+                  </div>
+                </ReportSection>
 
-            <ReportSection
-              id="fraud"
-              num="04"
-              eyebrow="Supporting Documents & Fraud Signals"
-              title="Supporting Document Assurance & Fraud Signals"
-            >
-              {fraudParagraphs.map((paragraph) => (
-                <p className="report-p" key={paragraph}>{paragraph}</p>
-              ))}
-              <SupportingDocumentsSection fraudAnalysis={report.fraudAnalysis} />
-            </ReportSection>
+                <ReportSection id="funding" num="04" eyebrow="Funding Opportunities" title="Funding & Grants Opportunities">
+                  {fundingParagraphs.map((paragraph) => (
+                    <p className="report-p" key={paragraph}>{paragraph}</p>
+                  ))}
+                  <div className="action-list">
+                    {(report.grants ?? []).map((grant, index) => (
+                      <ActionItem
+                        key={grant.name}
+                        num={`G${index + 1}`}
+                        numBg="var(--accent)"
+                        title={grant.name}
+                        detail={grant.description}
+                        tags={grant.tags.map((tag, tagIndex) => ({
+                          label: tag,
+                          type: tagIndex === 0 ? 'timeline' : tagIndex === 1 ? 'impact' : 'cost',
+                        }))}
+                      />
+                    ))}
+                  </div>
+                </ReportSection>
 
-            <ReportSection id="funding" num="05" eyebrow="Funding Opportunities" title="Funding & Grants Opportunities">
-              {fundingParagraphs.map((paragraph) => (
-                <p className="report-p" key={paragraph}>{paragraph}</p>
-              ))}
-              <div className="action-list">
-                {report.grants.map((grant, index) => (
-                  <ActionItem
-                    key={grant.name}
-                    num={`G${index + 1}`}
-                    numBg="var(--accent)"
-                    title={grant.name}
-                    detail={grant.description}
-                    tags={grant.tags.map((tag, tagIndex) => ({
-                      label: tag,
-                      type: tagIndex === 0 ? 'timeline' : tagIndex === 1 ? 'impact' : 'cost',
-                    }))}
-                  />
-                ))}
-              </div>
-            </ReportSection>
-
-            <ReportSection id="actions" num="06" eyebrow="Recommended Actions" title="Recommended Next Actions">
-              {actionParagraphs.map((paragraph) => (
-                <p className="report-p" key={paragraph}>{paragraph}</p>
-              ))}
-              <div className="action-list">
-                {report.recommendations.map((recommendation, index) => (
-                  <ActionItem
-                    key={`${recommendation.text}-${index}`}
-                    num={String(index + 1)}
-                    title={recommendation.text}
-                    detail={`Expected impact: ${recommendation.impactLabel}.`}
-                    tags={[
-                      { label: recommendation.impactLabel, type: 'impact' },
-                    ]}
-                  />
-                ))}
-              </div>
-            </ReportSection>
+                <ReportSection id="actions" num="05" eyebrow="Recommended Actions" title="Recommended Next Actions">
+                  {actionParagraphs.map((paragraph) => (
+                    <p className="report-p" key={paragraph}>{paragraph}</p>
+                  ))}
+                  <div className="action-list">
+                    {(report.recommendations ?? []).map((recommendation, index) => (
+                      <ActionItem
+                        key={`${recommendation.text}-${index}`}
+                        num={String(index + 1)}
+                        title={recommendation.text}
+                        detail={`Expected impact: ${recommendation.impactLabel}.`}
+                        tags={[
+                          { label: recommendation.impactLabel, type: 'impact' },
+                        ]}
+                      />
+                    ))}
+                  </div>
+                </ReportSection>
+              </>
+            ) : (
+              <>
+                <ReportSection
+                  id="fraud"
+                  num="FD"
+                  eyebrow="Supporting Documents & Fraud Signals"
+                  title="Fraud Detection & Document Assurance"
+                >
+                  {fraudParagraphs.map((paragraph) => (
+                    <p className="report-p" key={paragraph}>{paragraph}</p>
+                  ))}
+                  <div className="report-callout fraud-tab-callout">
+                    <div className="report-callout-label">Fraud Monitoring Snapshot</div>
+                    {fraudAnalysis.summary}
+                  </div>
+                  <SupportingDocumentsSection fraudAnalysis={fraudAnalysis} sectionIdPrefix="fraud" />
+                </ReportSection>
+              </>
+            )}
 
             <div className="report-footer">
               <div className="report-footer-left">
@@ -391,7 +468,7 @@ export default function ReportPage() {
         </div>
       </div>
 
-      <ReportCopilot jobId={chatJobId} companyName={report.company.name} />
+      <ReportCopilot jobId={chatJobId} companyName={company.name} />
     </div>
   );
 }

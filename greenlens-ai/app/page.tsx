@@ -36,14 +36,16 @@ export default function IntakePage() {
   const isBusy = isSubmitting || isRouting;
   const canSubmit =
     company.name.trim().length > 0 &&
+    company.province.trim().length > 0 &&
+    company.industry.trim().length > 0 &&
     company.revenue.trim().length > 0 &&
     company.employees > 0 &&
     csvFile !== null;
 
   const handleReset = () => {
     clearSession();
-    setCompany(DEFAULT_COMPANY);
-    setGovernanceAnswers(DEFAULT_GOVERNANCE_ANSWERS);
+    setCompany({ ...DEFAULT_COMPANY });
+    setGovernanceAnswers([...DEFAULT_GOVERNANCE_ANSWERS]);
     setCsvFile(null);
     setPdfFiles([]);
     setError(null);

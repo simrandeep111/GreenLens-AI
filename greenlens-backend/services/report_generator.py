@@ -17,6 +17,20 @@ REQUIRED_REPORT_KEYS = [
     "actionsNarrative",
 ]
 
+
+def _summarize_transaction_anomalies(fraud_analysis: dict) -> str:
+    anomalies = fraud_analysis.get("transactionAnomalies", [])
+    if not anomalies:
+        return "- No transaction-level anomaly tests were available."
+
+    formatted = []
+    for anomaly in anomalies[:3]:
+        formatted.append(
+            f"- {anomaly.get('testName', 'Unknown test')} [{anomaly.get('status', 'unknown')}/{anomaly.get('severity', 'info')}]: "
+            f"{anomaly.get('detail', '')}"
+        )
+    return "\n".join(formatted)
+
 def _build_report_prompt(
     company: dict,
     score: dict,
@@ -40,6 +54,7 @@ def _build_report_prompt(
         f"- [{flag['severity'].upper()}] {flag['title']}: {flag['detail']}"
         for flag in fraud_flags[:5]
     ) or "- No material fraud flags detected."
+    anomaly_text = _summarize_transaction_anomalies(fraud_analysis)
 
     return f"""You are an expert ESG analyst at a Canadian sustainability consulting firm.
 Write a professional ESG report based on the following verified data. 
@@ -97,6 +112,9 @@ Verified spend coverage across reviewed vendors: {fraud_analysis['verifiedSpendP
 Top document assurance findings:
 {fraud_flags_text}
 
+Forensic ledger tests:
+{anomaly_text}
+
 --- AVAILABLE GRANTS ---
 {grants_context}
 
@@ -120,6 +138,7 @@ def _build_fallback_report(
     score: dict,
     emissions: dict,
     benchmark: dict,
+    fraud_analysis: dict,
     recommendations: list[dict],
 ) -> dict:
     """Fallback report if the LLM call fails — uses template text."""
@@ -135,6 +154,34 @@ def _build_fallback_report(
     s3 = emissions["scope3"]
     intensity = benchmark["yourIntensity"]
     avg = benchmark["sectorAverage"]
+    docs_reviewed = int(fraud_analysis.get("supportingDocsReviewed", 0) or 0)
+    fraud_summary = str(fraud_analysis.get("summary", "")).strip()
+    flagged_anomalies = [
+        anomaly for anomaly in fraud_analysis.get("transactionAnomalies", [])
+        if anomaly.get("status") == "flag"
+    ]
+    flagged_names = ", ".join(anomaly.get("testName", "unknown test") for anomaly in flagged_anomalies[:3])
+
+    if docs_reviewed > 0:
+        fraud_intro = (
+            f"GreenLens reviewed {docs_reviewed} uploaded supporting document(s) and cross-checked them against the ledger "
+            f"for duplicate references, amount mismatches, and missing evidence coverage."
+        )
+    else:
+        fraud_intro = (
+            "No supporting documents were uploaded for this run, so GreenLens performed ledger-only forensic testing "
+            "on the transaction CSV using Benford, round-number, and temporal-pattern checks."
+        )
+
+    if flagged_anomalies:
+        anomaly_note = (
+            f" Transaction-level tests flagged {len(flagged_anomalies)} area(s), including {flagged_names}. "
+            f"These patterns should be reviewed before relying on the records for external assurance."
+        )
+    else:
+        anomaly_note = (
+            " Transaction-level forensic checks did not surface material anomalies in amount distribution or timing."
+        )
 
     return {
         "executiveSummary": (
@@ -157,10 +204,7 @@ def _build_fallback_report(
             f"disclosure has not yet been published."
         ),
         "fraudNarrative": (
-            f"Supporting-document assurance was completed using the uploaded utility bills, receipts, and invoices. "
-            f"GreenLens reviewed document-to-ledger matches, duplicate references, and internal math consistency "
-            f"to surface potential fraud or weak evidence trails. Any flagged mismatches should be reviewed before "
-            f"relying on the submitted records for external reporting or reimbursement workflows."
+            f"{fraud_intro} {fraud_summary}{anomaly_note}"
         ),
         "fundingNarrative": (
             f"Based on {name}'s province, industry, and size, GreenLens has identified eligible "
@@ -305,7 +349,7 @@ def generate_report(
 
     if not raw:
         print("[REPORT] LLM returned empty — using fallback template")
-        return _build_fallback_report(company, score, emissions, benchmark, recommendations), "fallback"
+        return _build_fallback_report(company, score, emissions, benchmark, fraud_analysis, recommendations), "fallback"
 
     # Try to parse JSON from the response
     try:
@@ -316,4 +360,4 @@ def generate_report(
     except (json.JSONDecodeError, ValueError) as e:
         print(f"[REPORT] Failed to parse LLM JSON: {e}")
         print(f"[REPORT] Raw response: {raw[:500]}")
-        return _build_fallback_report(company, score, emissions, benchmark, recommendations), "fallback"
+        return _build_fallback_report(company, score, emissions, benchmark, fraud_analysis, recommendations), "fallback"

@@ -8,7 +8,6 @@ const NAV_ITEMS = [
   { id: 'exec', label: 'Executive Summary' },
   { id: 'emissions', label: 'Emissions Overview' },
   { id: 'compliance', label: 'Compliance & Regulatory' },
-  { id: 'fraud', label: 'Supporting Documents' },
   { id: 'funding', label: 'Funding Opportunities' },
   { id: 'actions', label: 'Recommended Actions' },
 ];

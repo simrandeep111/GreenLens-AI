@@ -3,7 +3,7 @@ Pydantic models for API responses.
 """
 
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class UploadResponse(BaseModel):
@@ -21,6 +21,7 @@ class StatusResponse(BaseModel):
     stepLabel: str
     progress: int        # 0-100
     error: Optional[str] = None
+    fraudAlert: Optional[dict] = None
 
 
 class EmissionBreakdown(BaseModel):
@@ -74,7 +75,7 @@ class SupportingDocumentReview(BaseModel):
     matchedDate: Optional[str] = None
     matchedAmount: Optional[float] = None
     amountDelta: Optional[float] = None
-    parserNotes: list[str] = []
+    parserNotes: list[str] = Field(default_factory=list)
 
 
 class FraudFlag(BaseModel):
@@ -104,6 +105,7 @@ class FraudAnalysisResponse(BaseModel):
     verifiedSpendPct: int
     flags: list[FraudFlag]
     documents: list[SupportingDocumentReview]
+    transactionAnomalies: list[dict] = Field(default_factory=list)
 
 
 class ReportSections(BaseModel):

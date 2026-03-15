@@ -23,4 +23,5 @@ async def get_status(job_id: str):
         stepLabel=job["step_label"],
         progress=job["progress"],
         error=job.get("error"),
+        fraudAlert=job.get("fraud_alert"),
     )
