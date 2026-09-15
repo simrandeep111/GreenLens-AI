@@ -65,7 +65,6 @@ Frontend
 Framework: Next.js 16 with React 19
 Purpose: intake flow, processing screen, dashboard, full report, report copilot
 State model: browser session persisted in localStorage
-Default backend target: http://127.0.0.1:8000
 Backend
 Framework: FastAPI
 Processing model: background thread per analysis job
